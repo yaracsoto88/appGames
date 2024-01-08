@@ -1,5 +1,7 @@
 package com.example.a2048;
 
+import java.util.Random;
+
 public class Tablero {
     private Casilla[][] board;
     private int score;
@@ -19,15 +21,35 @@ public class Tablero {
         }
     }
 
+    public void addCasilla() {
+        int i = (int) (Math.random() * board.length);
+        int j = (int) (Math.random() * board[0].length);
+        if (board[i][j].getValor() == 0) {
+            int numAleatorio = (int) (Math.random() * 2);
+            switch (numAleatorio) {
+                case 0:
+                    board[i][j].setValor(2);
+                    break;
+                case 1:
+                    board[i][j].setValor(4);
+                    break;
+            }
+        } else if (gameLost()) {
+            return;
+        } else {
+            addCasilla();
+        }
+    }
+
+
+
     public void up() {
         if (!gameOver) {
-
-            //empezamos por las filas o por las columnas??
-            for (int j = 0; j < board[0].length; j++) {
-                //al empezar por i=1 nos aseguramos de que no se sale del tablero y no saltamos la primera fila,
-                //es decir, de 2a fila a la 1a nos tendremos que poder mover
-                for (int i = 1; i < board.length; i++) {
-                    //si la casilla en la que nos encontramos no está vacia podremos hacer un mov
+            //al empezar por i=1 nos aseguramos de que no se sale del tablero y nos saltamos la primera fila
+            for (int i = 1; i < board.length; i++) {
+                // Itera sobre las columnas
+                for (int j = 0; j < board[0].length; j++) {
+                    // Si la casilla en la que nos encontramos no está vacía, realiza el movimiento y la fusión
                     if (board[i][j].getValor() != 0) {
                         moveUp(i, j);
                         fusionUp(i, j);
@@ -61,26 +83,115 @@ public class Tablero {
         }
     }
 
-    public void addCasilla() {
-        int i = (int) (Math.random() * board.length);
-        int j = (int) (Math.random() * board[0].length);
-        if (board[i][j].getValor() == 0) {
-            int num = (int) (Math.random() * 2);
-            switch (num) {
-                case 0:
-                    board[i][j].setValor(2);
-                    break;
-                case 1:
-                    board[i][j].setValor(4);
-                    break;
+    public void down() {
+        if (!gameOver) {
+            //itera desde la segunda fila hasta la primera (i>=0) y comienza desde la penultima fila, no la ultima
+            //se mueve de abajo hacia arriba
+            for (int i = board.length - 2; i >= 0; i--) {
+                //itera por las columnas de izquierda a derecha
+                for (int j = 0; j < board[i].length; j++) {
+                    //si la casilla en la que nos encontramos no está vacia podremos hacer un mov
+                    if (board[i][j].getValor() != 0) {
+                        moveDown(i, j);
+                        fusionDown(i, j);
+                    }
+                }
             }
-        } else if (gameLost()) {
-            return;
-        } else {
-            addCasilla();
         }
     }
-}
+
+    private void moveDown(int i, int j) {
+        //nos encontramos en la posicion actual y comprobamos que no estamos en la ultima fila
+        //y que la casilla de abajo esté vacia para poder hacer el movimento
+        for (int k = i; k < board.length - 1 && board[k + 1][j].getValor() == 0; k++) {
+            board[k + 1][j].setValor(board[k][j].getValor());
+            board[k][j].setValor(0);
+        }
+    }
+
+    private void fusionDown(int i, int j) {
+        //volvemos a comrpobar que no estamos en la ultima fila y que el valor de la casilla actual
+        //y la de abajo sean iguales para poder fusionarlas
+        if (i < board.length - 1 && board[i + 1][j].getValor() == board[i][j].getValor()) {
+            //multiplicaremos por 2 ya que en este juego siempre se sumarán las casillas
+            board[i + 1][j].setValor(board[i][j].getValor() * 2);
+            //ponemos la casilla actual a 0 ya que se ha fusionado con la de abajo
+            board[i][j].setValor(0);
+            score += board[i + 1][j].getValor();
+        }
+    }
+
+    public void left(){
+        if(!gameOver){
+            for(int i=0;i<board.length;i++){
+                //desde la 2a columna de cada fila hasta la última
+                for(int j=1;j<board[i].length;j++){
+                    if(board[i][j].getValor()!=0){
+                        moveLeft(i,j);
+                        fusionLeft(i,j);
+
+                    }
+                }
+            }
+        }
+    }
+    private void moveLeft(int i, int j){
+        //Lo que cambian en este caso son las j(columnas) por eso k=j
+        //k-- porque nos movemos de derecha a izquierda en la fila
+        for(int k=j; k>1 && board[i][k-1].getValor()==0; k--){
+            board[i][k-1].setValor(board[i][k].getValor());
+            board[i][k].setValor(0);
+        }
+
+    }
+    private void fusionLeft(int i, int j){
+        // j>1 asegura que estamos en una columna que tiene al menos una columna a la izquierda para la fusión
+        // y comprobamos que el valor de la casilla actual y la de la izquierda sean iguales para poder fusionarlas
+        if(j>1 && board[i][j-1].getValor()==board[i][j].getValor()){
+            board[i][j-1].setValor(board[i][j].getValor()*2);
+            board[i][j].setValor(0);
+            score+=board[i][j-1].getValor();
+        }
+
+    }
+
+    public void right(){
+        if(!gameOver){
+            for(int i=0;i<board.length;i++){
+                //empezamos en la penultima columna
+                //itera desde la penultima columna hasta la primera (j>=0)
+                //se mueve de derecha a izquierda en la fila por eso j--
+                for(int j=board[i].length-2;j>=0;j--){
+                    if(board[i][j].getValor()!=0){
+                        moveRight(i,j);
+                        fusionRight(i,j);
+
+                    }
+                }
+            }
+        }
+    }
+    private void moveRight(int i, int j){
+        // La diferencia en el incremento/decremento de las variables k refleja la dirección del movimiento en cada caso
+        //k < board.length - 1, en vez de -2 porque asi nos aseguramos de que hay una columna válida a la derecha para mover o fusionar.
+        for(int k=j;k<board.length-1 && board[i][k+1].getValor()==0;k++){
+            board[i][k+1].setValor(board[i][k].getValor());
+            board[i][k].setValor(0);
+        }
+
+    }
+    private void fusionRight(int i, int j){
+        if(j<board.length-1 && board[i][j+1].getValor()==board[i][j].getValor()){
+            board[i][j+1].setValor(board[i][j].getValor()*2);
+            board[i][j].setValor(0);
+            score+=board[i][j+1].getValor();
+
+    }
+}}
+
+
+
+
 
 
 
