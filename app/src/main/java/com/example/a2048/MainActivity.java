@@ -13,10 +13,12 @@ import android.widget.Button;
 import android.widget.TableLayout;
 
 public class MainActivity extends AppCompatActivity {
-    private Game game;
+    private Tablero board;
     private TableLayout tableLayout;
     private GestureDetector mGestureDetector;
     private Button btNewGame;
+    private int height = 4;
+    private int width = 4;
 
 
     @Override
@@ -24,14 +26,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tableLayout = findViewById(R.id.tableLayout);
-        game=new Game(tableLayout);
+        board=new Tablero(height, width, tableLayout);
         mGestureDetector = new GestureDetector(this, new EscucharGestos());
         btNewGame=findViewById(R.id.btNewGame);
         btNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                game.inicializarMatriz();
-                game.conectarMatrizEnVista();
+                board.initBoard(height, width);
+                board.conectarMatrizEnVista();
 
             }
         });
@@ -52,16 +54,16 @@ public class MainActivity extends AppCompatActivity {
 
             if (ancho > alto) {
                 if (e2.getX() > e1.getX()) {
-                    game.movimientoDerecha();
+                   board.right();
 
                 } else {
-                    game.movimientoIzquierda();
+                   board.left();
                 }
             } else {
                 if (e1.getY() > e2.getY()) {
-                    game.movimientoArriba();
+                    board.up();
                 } else {
-                    game.movimientoAbajo();
+                    board.down();
                 }
             }
             return true;

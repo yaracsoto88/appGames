@@ -1,13 +1,19 @@
 package com.example.a2048;
 
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+
 import java.util.Random;
 
 public class Tablero {
     private Casilla[][] board;
     private int score;
     private boolean gameOver = false;
+    private TableLayout tableLayout;
 
-    public Tablero(int height, int width) {
+    public Tablero(int height, int width, TableLayout tableLayout) {
+        this.tableLayout = tableLayout;
         this.initBoard(height, width);
     }
 
@@ -19,29 +25,42 @@ public class Tablero {
                 this.board[i][j].setValor(0);
             }
         }
-    }
+        addCasilla();
 
-    public void addCasilla() {
-        int i = (int) (Math.random() * board.length);
-        int j = (int) (Math.random() * board[0].length);
-        if (board[i][j].getValor() == 0) {
-            int numAleatorio = (int) (Math.random() * 2);
-            switch (numAleatorio) {
-                case 0:
-                    board[i][j].setValor(2);
-                    break;
-                case 1:
-                    board[i][j].setValor(4);
-                    break;
+    }
+    public void conectarMatrizEnVista() {
+        for (int i = 0; i < 4; i++) {
+            TableRow row = (TableRow) tableLayout.getChildAt(i);
+            for (int j = 0; j < 4; j++) {
+                TextView textView = (TextView) row.getChildAt(j);
+                if (board[i][j].getValor() == 0) {
+                    textView.setText("");
+                } else {
+                    textView.setText(String.valueOf(board[i][j].getValor()));
+                }
+
             }
-        } else if (gameLost()) {
-            return;
-        } else {
-            addCasilla();
         }
+
     }
+    public void addCasilla() {
+            Random ran = new Random();
+            int x, y;
+            x = ran.nextInt(4);
+            y = ran.nextInt(4);
+            boolean empty = false;
 
+            while (!empty) {
+                if (board[x][y].getValor() == 0) {
+                    board[x][y].setValor(2);
+                    empty = true;
+                }else{
+                    x = ran.nextInt(4);
+                    y = ran.nextInt(4);
+                }
+            }
 
+        }
 
     public void up() {
         if (!gameOver) {
