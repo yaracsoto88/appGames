@@ -11,30 +11,35 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private Tablero board;
+    Tablero board;
     private TableLayout tableLayout;
     private GestureDetector mGestureDetector;
     private Button btNewGame;
     private int height = 4;
     private int width = 4;
+    TextView score;
+    String puntos;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        score = findViewById(R.id.score);
         tableLayout = findViewById(R.id.tableLayout);
-        board=new Tablero(height, width, tableLayout);
+        board = new Tablero(height, width, tableLayout);
         mGestureDetector = new GestureDetector(this, new EscucharGestos());
-        btNewGame=findViewById(R.id.btNewGame);
+        btNewGame = findViewById(R.id.btNewGame);
         btNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 board.initBoard(height, width);
                 board.conectarMatrizEnVista();
-
+                score.setText("0");
             }
         });
 
@@ -54,19 +59,41 @@ public class MainActivity extends AppCompatActivity {
 
             if (ancho > alto) {
                 if (e2.getX() > e1.getX()) {
-                   board.right();
+                    board.right();
+                    puntos = ("" + board.getScore());
+                    score.setText(puntos);
+                    results();
 
                 } else {
-                   board.left();
+                    board.left();
+                    puntos = ("" + board.getScore());
+                    score.setText(puntos);
+                    results();
                 }
             } else {
                 if (e1.getY() > e2.getY()) {
                     board.up();
+                    puntos = ("" + board.getScore());
+                    score.setText(puntos);
+                    results();
                 } else {
                     board.down();
+                    puntos = ("" + board.getScore());
+                    score.setText(puntos);
+                    results();
                 }
             }
             return true;
         }
+    }
+
+    private void results() {
+        if (board.gameWon()) {
+            Toast.makeText(this, "Has ganado", Toast.LENGTH_SHORT).show();
+        }
+        if (board.gameLost()) {
+            Toast.makeText(this, "Has perdido", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

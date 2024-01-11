@@ -9,7 +9,8 @@ import java.util.Random;
 
 public class Tablero {
     private Casilla[][] board;
-    private int score;
+
+    private int score = 0;
     private boolean gameOver = false;
     private TableLayout tableLayout;
 
@@ -28,7 +29,7 @@ public class Tablero {
             }
         }
         addCasilla();
-
+        score=0;
     }
 
     public void conectarMatrizEnVista() {
@@ -44,7 +45,6 @@ public class Tablero {
 
             }
         }
-
     }
 
     public void addCasilla() {
@@ -91,7 +91,7 @@ public class Tablero {
             board[k - 1][j].setValor(board[k][j].getValor());
             board[k][j].setValor(0);
         }
-        fusionUp(k,j);
+        fusionUp(k, j);
     }
 
     private void fusionUp(int i, int j) {
@@ -131,11 +131,11 @@ public class Tablero {
         //nos encontramos en la posicion actual y comprobamos que no estamos en la ultima fila
         //y que la casilla de abajo esté vacia para poder hacer el movimento
         int k;
-        for ( k = i; k < board.length - 1 && board[k + 1][j].getValor() == 0; k++) {
+        for (k = i; k < board.length - 1 && board[k + 1][j].getValor() == 0; k++) {
             board[k + 1][j].setValor(board[k][j].getValor());
             board[k][j].setValor(0);
         }
-        fusionDown(k,j);
+        fusionDown(k, j);
     }
 
     private void fusionDown(int i, int j) {
@@ -170,11 +170,11 @@ public class Tablero {
         //Lo que cambian en este caso son las j(columnas) por eso k=j
         //k-- porque nos movemos de derecha a izquierda en la fila
         int k;
-        for ( k = j; k >= 1 && board[i][k - 1].getValor() == 0; k--) {
+        for (k = j; k >= 1 && board[i][k - 1].getValor() == 0; k--) {
             board[i][k - 1].setValor(board[i][k].getValor());
             board[i][k].setValor(0);
         }
-        fusionLeft(i,k);
+        fusionLeft(i, k);
     }
 
     private void fusionLeft(int i, int j) {
@@ -209,11 +209,11 @@ public class Tablero {
         // La diferencia en el incremento/decremento de las variables k refleja la dirección del movimiento en cada caso
         //k < board.length - 1, en vez de -2 porque asi nos aseguramos de que hay una columna válida a la derecha para mover o fusionar.
         int k;
-        for ( k = j; k < board.length - 1 && board[i][k + 1].getValor() == 0; k++) {
+        for (k = j; k < board.length - 1 && board[i][k + 1].getValor() == 0; k++) {
             board[i][k + 1].setValor(board[i][k].getValor());
             board[i][k].setValor(0);
         }
-        fusionRight(i,k);
+        fusionRight(i, k);
 
     }
 
@@ -225,10 +225,10 @@ public class Tablero {
         }
     }
 
-    private void rePintar(){
+    private void rePintar() {
         addCasilla();
         conectarMatrizEnVista();
-        Log.d( "2048",this.toString());
+        Log.d("2048", this.toString());
     }
 
     @Override
@@ -242,6 +242,34 @@ public class Tablero {
             s += "\n";
         }
         return s;
+    }
+
+    public boolean gameLost() {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j].getValor() == 0) {
+                    return false;
+                }
+            }
+        }
+        gameOver = true;
+        return true;
+    }
+
+    public boolean gameWon() {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j].getValor() == 2048) {
+                    gameOver = true;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
 
