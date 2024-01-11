@@ -4,6 +4,9 @@ import android.util.Log;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.core.content.ContextCompat;
 
 import java.util.Random;
 
@@ -28,8 +31,9 @@ public class Tablero {
                 this.board[i][j].setValor(0);
             }
         }
+
         addCasilla();
-        score=0;
+        score = 0;
     }
 
     public void conectarMatrizEnVista() {
@@ -37,13 +41,49 @@ public class Tablero {
             TableRow row = (TableRow) tableLayout.getChildAt(i);
             for (int j = 0; j < 4; j++) {
                 TextView textView = (TextView) row.getChildAt(j);
-                if (board[i][j].getValor() == 0) {
+                int valor = board[i][j].getValor();
+                int color = switchColor(valor);
+                Log.d("color",""+color);
+                textView.setTextColor(ContextCompat.getColor(context,color));
+
+                if (valor == 0) {
                     textView.setText("");
                 } else {
-                    textView.setText(String.valueOf(board[i][j].getValor()));
+                    textView.setText(String.valueOf(valor));
                 }
 
             }
+        }
+    }
+
+    private int switchColor(int valor) {
+        switch (valor) {
+            case 0:
+                return R.color.c0;
+            case 2:
+                return R.color.c2;
+            case 4:
+                return R.color.c4;
+            case 8:
+                return R.color.c8;
+            case 16:
+                return R.color.c16;
+            case 32:
+                return R.color.c32;
+            case 64:
+                return R.color.c64;
+            case 128:
+                return R.color.c128;
+            case 256:
+                return R.color.c256;
+            case 512:
+                return R.color.c512;
+            case 1024:
+                return R.color.c1024;
+            case 2048:
+                return R.color.c2048;
+            default:
+                return -1;
         }
     }
 
@@ -78,6 +118,8 @@ public class Tablero {
                     }
                 }
             }
+
+
             rePintar();
         }
     }

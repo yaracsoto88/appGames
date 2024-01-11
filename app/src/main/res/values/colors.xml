@@ -6,4 +6,20 @@
     <color name="beige">#EACCAD</color>
     <color name="brown">#C35831</color>
 
+
+        <color name="c0">#FFCDC1B4</color>
+        <color name="c2">#FFEEE4DA</color>
+        <color name="c4">#FFEDE0C8</color>
+        <color name="c8">#FFEFB380</color>
+        <color name="c16">#FFF19663</color>
+        <color name="c32">#FFF57C5F</color>
+        <color name="c64">#FFEA4C3D</color>
+        <color name="c128">#FFEFB35A</color>
+        <color name="c256">#FFEAA63D</color>
+        <color name="c512">#FFE67E22</color>
+        <color name="c1024">#FFEDC93E</color>
+        <color name="c2048">#FFEEC22E</color>
+
+
+
 </resources>
