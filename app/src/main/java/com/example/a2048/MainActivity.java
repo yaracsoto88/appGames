@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         score = findViewById(R.id.score);
         tableLayout = findViewById(R.id.tableLayout);
-        board = new Tablero(height, width, tableLayout);
+        board = new Tablero(height, width, tableLayout,this);
         mGestureDetector = new GestureDetector(this, new EscucharGestos());
         btNewGame = findViewById(R.id.btNewGame);
         btNewGame.setOnClickListener(new View.OnClickListener() {

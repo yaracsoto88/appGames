@@ -1,5 +1,6 @@
 package com.example.a2048;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -16,9 +17,11 @@ public class Tablero {
     private int score = 0;
     private boolean gameOver = false;
     private TableLayout tableLayout;
+    Context context;
 
-    public Tablero(int height, int width, TableLayout tableLayout) {
+    public Tablero(int height, int width, TableLayout tableLayout, Context context) {
         this.tableLayout = tableLayout;
+        this.context = context;
         this.initBoard(height, width);
         this.conectarMatrizEnVista();
     }
@@ -44,7 +47,7 @@ public class Tablero {
                 int valor = board[i][j].getValor();
                 int color = switchColor(valor);
                 Log.d("color",""+color);
-                textView.setTextColor(ContextCompat.getColor(context,color));
+                textView.setBackgroundColor(ContextCompat.getColor(context,color));
 
                 if (valor == 0) {
                     textView.setText("");
