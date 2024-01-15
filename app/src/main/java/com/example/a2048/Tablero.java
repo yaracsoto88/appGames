@@ -202,7 +202,6 @@ public class Tablero {
                 for (int j = 1; j < board[i].length; j++) {
                     if (board[i][j].getValor() != 0) {
                         moveLeft(i, j);
-//                        fusionLeft(i, j);
 
                     }
                 }
