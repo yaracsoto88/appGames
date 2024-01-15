@@ -1,9 +1,10 @@
 package com.example.a2048;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import androidx.gridlayout.widget.GridLayout;
+import android.widget.GridLayout;
 
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,8 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Senku extends AppCompatActivity {
     private SenkuTable senkuTable;
     private GridLayout gridLayout;
-    private ImageView[][] imageViews;
 
+    private int initialX=-1;
+    private int initialY=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,29 +28,83 @@ public class Senku extends AppCompatActivity {
         gridLayout = findViewById(R.id.gridLayout);
         senkuTable = new SenkuTable();
         initializeImageViews();
+        tableToView();
         gridLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-                float x = event.getX();
-                float y = event.getY();
+                if(event.getAction()== MotionEvent.ACTION_UP){
+                    float x = event.getX();
+                    float y = event.getY();
 
-//              int resourceId = getResourceIdFromTouch(x, y);
-                int column = getColumnFromTouch(x, gridLayout);
-                int row = getRowFromTouch(y, gridLayout);
+                    int column = getColumnFromTouch(x, gridLayout);
+                    int row = getRowFromTouch(y, gridLayout);
+                    System.out.println("row: " + row + " column: " + column);
+                    touch(row, column);
+                }
 
-                int initialX = 2;
-                int initialY = 2;
-                int destinationX = 4;
-                int destinationY = 2;
-
-                senkuTable.move(initialX, initialY, destinationX, destinationY);
-                int gameResult = senkuTable.finishGame();
-
-                showToast("Posición: (" + row + ", " + column + ") - ID: ");
                 return true;
             }
         });
     }
+
+    private void touch(int row, int column) {
+        Log.d("Senku", "Touch: " + row + " " + column);
+        if (initialX == -1 && initialY == -1) {
+            initialX = row;
+            initialY = column;
+        } else {
+            System.out.println("initialX: " + initialX + " initialY: " + initialY + " row: " + row + " column: " + column);
+            senkuTable.move(initialX, initialY, row, column);
+            initialX = -1;
+            initialY = -1;
+        }
+        tableToView();
+    }
+
+    private void initializeImageViews() {
+        ImageView imageView;
+            int index = 0;
+            for (int i = 0; i < gridLayout.getRowCount(); i++) {
+                for (int j = 0; j < gridLayout.getColumnCount(); j++) {
+                    imageView = new ImageView(this);
+                    imageView.setImageResource(R.drawable.circuloazul);
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    imageView.setAdjustViewBounds(true);
+                    imageView.setId(index++);
+                    GridLayout.Spec rowSpec = GridLayout.spec(i);
+                    GridLayout.Spec colSpec = GridLayout.spec(j);
+                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, colSpec);
+                    int widthInDp = (int) getResources().getDimension(R.dimen.image_width);
+                    int heightInDp = (int) getResources().getDimension(R.dimen.image_height);
+                    params.width = widthInDp;
+                    params.height = heightInDp;
+                    imageView.setLayoutParams(params);
+                    gridLayout.addView(imageView);
+                }
+            }
+        }
+    public void tableToView(){
+        int index = 0;
+
+        for (int i = 0; i < gridLayout.getRowCount(); i++) {
+            for (int j = 0; j < gridLayout.getColumnCount(); j++) {
+                View view = gridLayout.getChildAt(index);
+                if (view instanceof ImageView) {
+                    ImageView imageView = (ImageView) view;
+                    if (senkuTable.getValueAt(i,j) == 1) {
+                        imageView.setImageResource(R.drawable.circuloazul);
+                    } else if (senkuTable.getValueAt(i,j) == 0) {
+                        imageView.setImageResource(R.drawable.white);
+                    }
+                    else {
+                        imageView.setVisibility(View.GONE);
+                    }
+                }
+                index++;
+            }
+        }
+    }
+
     private int getColumnFromTouch(float x, GridLayout gridLayout) {
         float columnWidth = gridLayout.getWidth() / gridLayout.getColumnCount();
         return (int) (x / columnWidth);
@@ -58,58 +114,7 @@ public class Senku extends AppCompatActivity {
         float rowHeight = gridLayout.getHeight() / gridLayout.getRowCount();
         return (int) (y / rowHeight);
     }
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-    private void initializeImageViews() {
-        imageViews = new ImageView[7][7];
 
-        for (int i = 0; i < gridLayout.getRowCount(); i++) {
-            for (int j = 0; j < gridLayout.getColumnCount(); j++) {
-                ImageView imageView = new ImageView(this);
-                imageView.setTag(i + "-" + j);
-                imageViews[i][j] = imageView;
-
-                // Configurar la apariencia inicial según el estado del tablero
-                updateImageView(i, j);
-
-                // Asignar OnClickListener para manejar eventos de toque
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        handleCellClick((ImageView) v);
-                    }
-                });
-
-                gridLayout.addView(imageView);
-            }
-        }
-    }
-
-    private void handleCellClick(ImageView imageView) {
-        String tag = (String) imageView.getTag();
-        String[] coordinates = tag.split("-");
-        int x = Integer.parseInt(coordinates[0]);
-        int y = Integer.parseInt(coordinates[1]);
-
-        // Realizar el movimiento en tu lógica de juego
-        // Puedes llamar a senkuTable.move(x, y, newX, newY) aquí
-
-        // Actualizar la interfaz de usuario después del movimiento
-        updateImageView(x, y);
-    }
-
-    private void updateImageView(int x, int y) {
-        // Actualizar la apariencia de la ImageView según el estado del tablero
-        // Por ejemplo, establecer la visibilidad o cambiar la imagen según el valor en el tablero
-        int value = senkuTable.getValueAt(x, y);
-        ImageView imageView = imageViews[x][y];
-
-        // Lógica para establecer la visibilidad o imagen según el valor en el tablero
-        // imageView.setVisibility(View.VISIBLE); o imageView.setImageResource(R.drawable.pieza);
-
-        // Puedes adaptar esta lógica según tus necesidades específicas
-    }
 }
-}
+
 

@@ -30,59 +30,69 @@ public class SenkuTable {
     public boolean isValidMove(int x, int y, int newX, int newY) {
         //si el movimiento no es valido, se devuelve false
         //un movimiento valido siempre sera en linea recta, ya sea horizontal o vertical
-        if (x != newX && y != newY) {
-            return false;
-        } else {
-            //si las coordenadas son validas y la casilla de destino esta vacia se puede hacer el movimiento
-            if (table[x][y] == 1 && table[newX][newY] == 0) {
-                //horizontal
-                if (x != newX) {
-                    //movimiento derecha
-                    if (x < newX) {
-                        //verificamos que la casilla intermedia este ocupada (table[x+1][y]==1)
-                        //y x==newX-2 para que el movimiento sea de 2 casillas
-                        if (x == newX - 2 && table[x + 1][y] == 1) {
-                            return true;
-                        }
-                    }
-                    //movimiento izquierda
-                    else {
-                        //Comprobamos que la casilla intermedia este ocupada y que el movimiento sea de 2 casillas
-                        if (x == newX - 2 && table[x - 1][y] == 1) {
-                            return true;
-                        }
-                    }
-                    //vertical
-                } else {
-                    //movimiento abajo
-                    if (y < newY) {
-                        if (y == newY - 2 && table[x][y + 1] == 1) {
-                            return true;
-                        }
-                    }
-                    //movimiento arriba
-                    else {
-                        if (y == newY - 2 && table[x][y - 1] == 1) {
-                            return true;
-                        }
-                    }
 
+        //si las coordenadas son validas y la casilla de destino esta vacia se puede hacer el movimiento
+       // System.out.println("x  " + x + "y  " + y + "newX  " + newX + "newY  " + newY);
+        if (table[x][y] == 1 && table[newX][newY] == 0) {
+
+            //horizontal
+            if (y != newY) {
+                //movimiento derecha
+                if (y < newY) {
+                    //verificamos que la casilla intermedia este ocupada (table[x+1][y]==1)
+                    //y x==newX-2 para que el movimiento sea de 2 casillas
+                    if (y == newY - 2 && table[x][y+1] == 1) {
+                        table[x][y] = 0;
+                        table[x][y+1] = 0;
+                        table[newX][newY] = 1;
+                        return true;
+                    }
                 }
-            }
-            //si alguna de las condiciones no se cumple, se devuelve false
-            return false;
-        }
+                //movimiento izquierda
+                else {
+                    //Comprobamos que la casilla intermedia este ocupada y que el movimiento sea de 2 casillas
+                    if (y == newY + 2 && table[x][y-1] == 1) {
+                        table[x][y] = 0;
+                        table[x][y-1] = 0;
+                        table[newX][newY] = 1;
+                        return true;
+                    }
+                }
+                //vertical
+            } else {
 
+                //movimiento abajo
+                if (x < newX) {
+                    if (x == newX - 2 && table[x+1][y] == 1) {
+                        table[x][y] = 0;
+                        table[x+1][y] = 0;
+                        table[newX][newY] = 1;
+
+                        return true;
+                    }
+                }
+                //movimiento arriba
+                else {
+                    if (x == newX + 2 && table[x - 1][y] == 1) {
+                        table[x][y] = 0;
+                        table[x-1][y] = 0;
+                        table[newX][newY] = 1;
+                        return true;
+                    }
+                }
+
+            }
+        }
+        return false;
     }
+
 
     public void move(int x, int y, int newX, int newY) {
         if (isValidMove(x, y, newX, newY)) {
-            table[x][y] = 0;
-            table[newX][newY] = 1;
+            System.out.println("Movimiento valido");
             //se decrementa active porque se ha movido una ficha
             active--;
-        }
-        else{
+        } else {
             System.out.println("Movimiento no valido");
         }
     }
@@ -100,5 +110,12 @@ public class SenkuTable {
         }
 
     }
+
+   public int getValueAt(int x, int y) {
+        return table[x][y];
+    }
+
+
+
 }
 
