@@ -288,10 +288,13 @@ public class Tablero {
         return s;
     }
 
+
     public boolean gameLost() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j].getValor() == 0) {
+                if ((board[i][j].getValor() == 0) ||
+                        (i < board.length - 1 && board[i][j].getValor() == board[i + 1][j].getValor()) ||
+                        (j < board[i].length - 1 && board[i][j].getValor() == board[i][j + 1].getValor())) {
                     return false;
                 }
             }
