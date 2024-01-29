@@ -7,12 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     Button bt2048;
     Button btSenku;
+    private TextView title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,4 +37,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        title = findViewById(R.id.tvTitle);
+        Animation slideInLeft = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
+
+        // Asigna la animación al TextView
+        title.startAnimation(slideInLeft);
+
     }}

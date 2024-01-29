@@ -83,24 +83,24 @@ public class Senku extends AppCompatActivity {
             actualizarTiempo();
         }
 
-        private void actualizarTiempo() {
-            int minutosActuales = segundos / 60;
-            int segundosActuales = segundos % 60;
+    private void actualizarTiempo() {
+        int minutosActuales = segundos / 60;
+        int segundosActuales = segundos % 60;
 
-            // Actualizar la interfaz de usuario con el tiempo transcurrido
-            tvTimer.setText("Tiempo transcurrido: " + minutosActuales + " min " +
-                    segundosActuales + " seg");
-            // Incrementar los segundos
-            segundos++;
+        // Formatear los minutos y segundos con dos dígitos
+        String tiempoFormateado = String.format("%02d:%02d", minutosActuales, segundosActuales);
 
-            // Enviar un nuevo mensaje después de 1 segundo
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    actualizarTiempo();
-                }
-            }, 1000);
-        }
+        // Establecer el texto formateado en tu TextView
+        tvTimer.setText(tiempoFormateado);
+
+        segundos++;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                actualizarTiempo();
+            }
+        }, 1000);
+    }
 
         @Override
         protected void onDestroy() {

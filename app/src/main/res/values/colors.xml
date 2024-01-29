@@ -19,7 +19,7 @@
         <color name="c512">#FFE67E22</color>
         <color name="c1024">#FFEDC93E</color>
         <color name="c2048">#FFEEC22E</color>
-
+    <color name="fondo">#CF8989</color>
 
 
 </resources>
