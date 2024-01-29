@@ -189,12 +189,24 @@
         android:id="@+id/textView3"
         android:layout_width="212dp"
         android:layout_height="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
         android:gravity="center"
         android:text="2048"
         android:textColor="@color/brown"
         android:textSize="40sp"
+        app:layout_constraintEnd_toStartOf="@+id/btNewGame"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTimer"
+        android:layout_width="212dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="36dp"
+        android:gravity="center"
+        android:textColor="@color/brown"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/btNewGame"
         app:layout_constraintTop_toTopOf="parent" />
 

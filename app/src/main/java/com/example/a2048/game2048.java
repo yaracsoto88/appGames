@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +25,10 @@ public class game2048 extends AppCompatActivity {
     TextView score;
     String puntos;
     private Button btUndo;
+    private TextView tvTimer;
+    private Handler handler;
+    private int segundos=0;
+
 
 
     @Override
@@ -49,8 +54,37 @@ public class game2048 extends AppCompatActivity {
                 board.undo();
             }
         });
-
+        tvTimer=findViewById(R.id.tvTimer);
+        handler = new Handler();
+        actualizarTiempo();
     }
+
+    private void actualizarTiempo() {
+        int minutosActuales = segundos / 60;
+        int segundosActuales = segundos % 60;
+
+        // Formatear los minutos y segundos con dos dígitos
+        String tiempoFormateado = String.format("%02d:%02d", minutosActuales, segundosActuales);
+
+        // Establecer el texto formateado en tu TextView
+        tvTimer.setText(tiempoFormateado);
+
+        segundos++;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                actualizarTiempo();
+            }
+        }, 1000);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Detener el temporizador al salir de la actividad
+        handler.removeCallbacksAndMessages(null);
+    }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
