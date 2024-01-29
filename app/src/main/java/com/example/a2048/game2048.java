@@ -23,6 +23,7 @@ public class game2048 extends AppCompatActivity {
     private int width = 4;
     TextView score;
     String puntos;
+    private Button btUndo;
 
 
     @Override
@@ -39,6 +40,13 @@ public class game2048 extends AppCompatActivity {
             public void onClick(View v) {
                 board = new Tablero(height, width, tableLayout, game2048.this);
 
+            }
+        });
+        btUndo=findViewById(R.id.btUndo);
+        btUndo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                board.undo();
             }
         });
 
@@ -85,6 +93,7 @@ public class game2048 extends AppCompatActivity {
             return true;
         }
     }
+
 
     private void results() {
         if (board.gameWon()) {

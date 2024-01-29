@@ -11,18 +11,16 @@
         android:id="@+id/btReset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="1dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
+        android:layout_marginEnd="44dp"
+        android:text="Reset"
+        app:layout_constraintBottom_toBottomOf="@+id/btUndoMove"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/btUndoMove" />
 
     <GridLayout
         android:id="@+id/gridLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
@@ -34,4 +32,23 @@
         app:layout_constraintTop_toBottomOf="@+id/btReset">
 
     </GridLayout>
+
+    <Button
+        android:id="@+id/btUndoMove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="88dp"
+        android:text="Undo Move"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="182dp"
+        tools:layout_editor_absoluteY="31dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
