@@ -13,13 +13,12 @@
         <item name="android:background">@color/orange</item>
 
     </style>
-
-        <!-- Estilo para los botones -->
         <style name="ButtonStyle">
             <item name="android:layout_width">wrap_content</item>
             <item name="android:layout_height">wrap_content</item>
+
             <item name="android:textSize">18sp</item>
-            <item name="android:textColor">#FFFFFF</item> <!-- Color del texto -->
+            <item name="android:textColor">#FFFFFF</item>
             <item name="android:background">@drawable/button_background</item>
 
             <item name="android:layout_marginTop">8dp</item>
