@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.GestureDetector;
@@ -28,6 +30,7 @@ public class game2048 extends AppCompatActivity {
     private TextView tvTimer;
     private Handler handler;
     private int segundos=0;
+    private TextView tvBest;
 
 
 
@@ -36,14 +39,24 @@ public class game2048 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game2048);
         score = findViewById(R.id.score);
+        tvBest=findViewById(R.id.best);
         tableLayout = findViewById(R.id.tableLayout);
         board = new Tablero(height, width, tableLayout,this);
+        getMaxScore();
         mGestureDetector = new GestureDetector(this, new EscucharGestos());
         btNewGame = findViewById(R.id.btNewGame);
         btNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 board = new Tablero(height, width, tableLayout, game2048.this);
+                // Detener el temporizador al salir de la actividad
+                handler.removeCallbacksAndMessages(null);
+                segundos=0;
+                actualizarTiempo();
+                //Reinicar el score
+                score.setText("0");
+
+
 
             }
         });
@@ -103,12 +116,14 @@ public class game2048 extends AppCompatActivity {
                     board.right();
                     puntos = ("" + board.getScore());
                     score.setText(puntos);
+                    saveMaxScore();
                     results();
 
                 } else {
                     board.left();
                     puntos = ("" + board.getScore());
                     score.setText(puntos);
+                    saveMaxScore();
                     results();
                 }
             } else {
@@ -116,11 +131,13 @@ public class game2048 extends AppCompatActivity {
                     board.up();
                     puntos = ("" + board.getScore());
                     score.setText(puntos);
+                    saveMaxScore();
                     results();
                 } else {
                     board.down();
                     puntos = ("" + board.getScore());
                     score.setText(puntos);
+                    saveMaxScore();
                     results();
                 }
             }
@@ -137,5 +154,23 @@ public class game2048 extends AppCompatActivity {
             Toast.makeText(this, "Has perdido", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void getMaxScore(){
+        SharedPreferences preferences = getSharedPreferences("Puntos", Context.MODE_PRIVATE);
+        //recuperar los datos
+        int maxScore = preferences.getInt("maxScore", 0);
+        tvBest.setText(String.valueOf(maxScore));
+
+    }
+    private void saveMaxScore(){
+        SharedPreferences preferences = getSharedPreferences("Puntos", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        int maxScore = Integer.parseInt(tvBest.getText().toString());
+        if(board.getScore()>maxScore){
+            editor.putInt("maxScore", board.getScore());
+            editor.apply();
+            tvBest.setText(String.valueOf(board.getScore()));
+        }
     }
 }
