@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,19 +30,25 @@ public class game2048 extends AppCompatActivity {
     private Button btUndo;
     private TextView tvTimer;
     private Handler handler;
-    private int segundos=0;
+    private int segundos = 0;
     private TextView tvBest;
-
+    private DBHelper dbHelper;
+    private static final String data = "ScoreData2048";
+    private boolean isRunning = true;
+    String userName;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        userName = intent.getStringExtra("UserName");
         setContentView(R.layout.activity_game2048);
         score = findViewById(R.id.score);
-        tvBest=findViewById(R.id.best);
+        tvBest = findViewById(R.id.best);
         tableLayout = findViewById(R.id.tableLayout);
-        board = new Tablero(height, width, tableLayout,this);
+        board = new Tablero(height, width, tableLayout, this);
+        dbHelper = new DBHelper(this);
         getMaxScore();
         mGestureDetector = new GestureDetector(this, new EscucharGestos());
         btNewGame = findViewById(R.id.btNewGame);
@@ -51,23 +58,22 @@ public class game2048 extends AppCompatActivity {
                 board = new Tablero(height, width, tableLayout, game2048.this);
                 // Detener el temporizador al salir de la actividad
                 handler.removeCallbacksAndMessages(null);
-                segundos=0;
+                segundos = 0;
                 actualizarTiempo();
                 //Reinicar el score
                 score.setText("0");
 
 
-
             }
         });
-        btUndo=findViewById(R.id.btUndo);
+        btUndo = findViewById(R.id.btUndo);
         btUndo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 board.undo();
             }
         });
-        tvTimer=findViewById(R.id.tvTimer);
+        tvTimer = findViewById(R.id.tvTimer);
         handler = new Handler();
         actualizarTiempo();
     }
@@ -111,19 +117,18 @@ public class game2048 extends AppCompatActivity {
             float ancho = Math.abs(e2.getX() - e1.getX());
             float alto = Math.abs(e2.getY() - e1.getY());
 
+            if(isRunning){
             if (ancho > alto) {
                 if (e2.getX() > e1.getX()) {
                     board.right();
                     puntos = ("" + board.getScore());
                     score.setText(puntos);
-                    saveMaxScore();
                     results();
 
                 } else {
                     board.left();
                     puntos = ("" + board.getScore());
                     score.setText(puntos);
-                    saveMaxScore();
                     results();
                 }
             } else {
@@ -131,16 +136,14 @@ public class game2048 extends AppCompatActivity {
                     board.up();
                     puntos = ("" + board.getScore());
                     score.setText(puntos);
-                    saveMaxScore();
                     results();
                 } else {
                     board.down();
                     puntos = ("" + board.getScore());
                     score.setText(puntos);
-                    saveMaxScore();
                     results();
                 }
-            }
+            }}
             return true;
         }
     }
@@ -149,28 +152,25 @@ public class game2048 extends AppCompatActivity {
     private void results() {
         if (board.gameWon()) {
             Toast.makeText(this, "Has ganado", Toast.LENGTH_SHORT).show();
+            saveMaxScore();
+            isRunning = false;
         }
         if (board.gameLost()) {
             Toast.makeText(this, "Has perdido", Toast.LENGTH_SHORT).show();
+            saveMaxScore();
+            isRunning = false;
         }
 
     }
 
-    private void getMaxScore(){
-        SharedPreferences preferences = getSharedPreferences("Puntos", Context.MODE_PRIVATE);
-        //recuperar los datos
-        int maxScore = preferences.getInt("maxScore", 0);
+    private void saveMaxScore() {
+        int score = board.getScore();
+        dbHelper.insertScoreData(data, userName, score);
+    }
+
+    private void getMaxScore() {
+        int maxScore = dbHelper.getMaxScore2048(data, userName);
         tvBest.setText(String.valueOf(maxScore));
+    }
 
-    }
-    private void saveMaxScore(){
-        SharedPreferences preferences = getSharedPreferences("Puntos", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        int maxScore = Integer.parseInt(tvBest.getText().toString());
-        if(board.getScore()>maxScore){
-            editor.putInt("maxScore", board.getScore());
-            editor.apply();
-            tvBest.setText(String.valueOf(board.getScore()));
-        }
-    }
 }

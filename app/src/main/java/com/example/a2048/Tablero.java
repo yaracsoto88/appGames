@@ -39,19 +39,21 @@ public class Tablero {
         addCasilla();
         score = 0;
     }
-    public void undo(){
+
+    public void undo() {
         if (boardUndo != null) {
             board = copiarMatrix(boardUndo);
             boardUndo = null;
-                    }
+        }
         conectarMatrizEnVista();
     }
+
     private Casilla[][] copiarMatrix(Casilla[][] source) {
         Casilla[][] copy = new Casilla[source.length][source[0].length];
         for (int i = 0; i < source.length; i++) {
             for (int j = 0; j < source[0].length; j++) {
                 copy[i][j] = new Casilla();
-                copy[i][j].setValor( source[i][j].getValor());
+                copy[i][j].setValor(source[i][j].getValor());
             }
         }
         Log.d("tag", "copiarMatrix: ");
@@ -65,8 +67,8 @@ public class Tablero {
                 TextView textView = (TextView) row.getChildAt(j);
                 int valor = board[i][j].getValor();
                 int color = switchColor(valor);
-                Log.d("color",""+color);
-                textView.setBackgroundColor(ContextCompat.getColor(context,color));
+                Log.d("color", "" + color);
+                textView.setBackgroundColor(ContextCompat.getColor(context, color));
 
                 if (valor == 0) {
                     textView.setText("");
@@ -110,27 +112,36 @@ public class Tablero {
     }
 
     public void addCasilla() {
+        boolean isAvailable = true;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (board[i][j].getValor() == 0) {
+                    isAvailable = false;
+                }
+            }
+        }
         Random ran = new Random();
         int x, y;
         x = ran.nextInt(4);
         y = ran.nextInt(4);
-        boolean empty = false;
 
-        while (!empty) {
+        while (!isAvailable) {
+            System.out.println("x: " + x + " y: " + y);
             if (board[x][y].getValor() == 0) {
                 board[x][y].setValor(2);
-                empty = true;
+                isAvailable = true;
             } else {
                 x = ran.nextInt(4);
                 y = ran.nextInt(4);
             }
+
         }
 
     }
 
     public void up() {
         if (!gameOver) {
-            boardUndo=copiarMatrix(board);
+            boardUndo = copiarMatrix(board);
             //al empezar por i=1 nos aseguramos de que no se sale del tablero y nos saltamos la primera fila
             for (int i = 1; i < board.length; i++) {
                 // Itera sobre las columnas
@@ -175,7 +186,7 @@ public class Tablero {
 
     public void down() {
         if (!gameOver) {
-            boardUndo=copiarMatrix(board);
+            boardUndo = copiarMatrix(board);
             //itera desde la segunda fila hasta la primera (i>=0) y comienza desde la penultima fila, no la ultima
             //se mueve de abajo hacia arriba
             for (int i = board.length - 2; i >= 0; i--) {
@@ -218,7 +229,7 @@ public class Tablero {
 
     public void left() {
         if (!gameOver) {
-            boardUndo=copiarMatrix(board);
+            boardUndo = copiarMatrix(board);
             for (int i = 0; i < board.length; i++) {
                 //desde la 2a columna de cada fila hasta la última
                 for (int j = 1; j < board[i].length; j++) {
@@ -256,7 +267,7 @@ public class Tablero {
 
     public void right() {
         if (!gameOver) {
-            boardUndo=copiarMatrix(board);
+            boardUndo = copiarMatrix(board);
             for (int i = 0; i < board.length; i++) {
                 //empezamos en la penultima columna
                 //itera desde la penultima columna hasta la primera (j>=0)

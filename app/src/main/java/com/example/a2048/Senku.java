@@ -1,7 +1,7 @@
 package com.example.a2048;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,36 +16,46 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Timer;
-
-
 
 public class Senku extends AppCompatActivity {
     private SenkuTable senkuTable;
     private GridLayout gridLayout;
-
-    private int initialX=-1;
-    private int initialY=-1;
+    private static final String data = "ScoreDataSenku";
+    private int initialX = -1;
+    private int initialY = -1;
     private Button btUndo;
     private Button btRestart;
     private TextView tvTimer;
     private Handler handler;
-    private int segundos=0;
-    private int minutos=0;
+    private int segundos = 0;
+    private int minutos = 0;
+    private DBHelper dbHelper;
+    private boolean isRunning = true;
+
+    private Button btMenu;
+    private TextView tvBest;
+    String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        userName = intent.getStringExtra("UserName");
         setContentView(R.layout.activity_senku);
         gridLayout = findViewById(R.id.gridLayout);
         btUndo = findViewById(R.id.btUndoMove);
+        btMenu = findViewById(R.id.btMenu);
+        tvBest = findViewById(R.id.tvBest);
         senkuTable = new SenkuTable();
+        dbHelper = new DBHelper(this);
+
         initializeImageViews();
         tableToView();
+        getMaxScore();
         gridLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-                if(event.getAction()== MotionEvent.ACTION_UP){
+                if (event.getAction() == MotionEvent.ACTION_UP) {
                     float x = event.getX();
                     float y = event.getY();
 
@@ -75,13 +85,25 @@ public class Senku extends AppCompatActivity {
                 Log.d("Senku", "Restart");
                 restart();
                 tableToView();
+                isRunning = true;
+                segundos = 0;
+                minutos = 0;
+
+            }
+        });
+        btMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Senku.this, Menu.class);
+                intent.putExtra("UserName", userName);
+                startActivity(intent);
             }
         });
 
         tvTimer = findViewById(R.id.textView);
         handler = new Handler();
-            actualizarTiempo();
-        }
+        actualizarTiempo();
+    }
 
     private void actualizarTiempo() {
         int minutosActuales = segundos / 60;
@@ -102,73 +124,83 @@ public class Senku extends AppCompatActivity {
         }, 1000);
     }
 
-        @Override
-        protected void onDestroy() {
-            super.onDestroy();
-            // Detener el temporizador al salir de la actividad
-            handler.removeCallbacksAndMessages(null);
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Detener el temporizador al salir de la actividad
+        handler.removeCallbacksAndMessages(null);
+    }
 
-    public void restart(){
-        senkuTable=new SenkuTable();
+    public void restart() {
+        senkuTable = new SenkuTable();
         tableToView();
 
 
     }
 
     private void touch(int row, int column) {
-        Log.d("Senku", "Touch: " + row + " " + column);
-        if (initialX == -1 && initialY == -1) {
-            initialX = row;
-            initialY = column;
-        } else {
-            System.out.println("initialX: " + initialX + " initialY: " + initialY + " row: " + row + " column: " + column);
-            if(!senkuTable.move(initialX, initialY, row, column)){
-                Toast.makeText(this, "Movimiento invalido", Toast.LENGTH_SHORT).show();
+        if (isRunning) {
+            Log.d("Senku", "Touch: " + row + " " + column);
+
+            if (initialX == -1 && initialY == -1) {
+                initialX = row;
+                initialY = column;
+            } else {
+                System.out.println("initialX: " + initialX + " initialY: " + initialY + " row: " + row + " column: " + column);
+                if (!senkuTable.move(initialX, initialY, row, column)) {
+                    Toast.makeText(this, "Movimiento invalido", Toast.LENGTH_SHORT).show();
+                }
+                initialX = -1;
+                initialY = -1;
+
             }
-            initialX = -1;
-            initialY = -1;
+            tableToView();
+            finish();
 
         }
-        tableToView();
-        finish();
     }
 
     private void initializeImageViews() {
         ImageView imageView;
-            int index = 0;
-            for (int i = 0; i < gridLayout.getRowCount(); i++) {
-                for (int j = 0; j < gridLayout.getColumnCount(); j++) {
-                    imageView = new ImageView(this);
-                    imageView.setImageResource(R.drawable.circuloazul);
-                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    imageView.setAdjustViewBounds(true);
-                    imageView.setId(index++);
-                    GridLayout.Spec rowSpec = GridLayout.spec(i);
-                    GridLayout.Spec colSpec = GridLayout.spec(j);
-                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, colSpec);
-                    int widthInDp = (int) getResources().getDimension(R.dimen.image_width);
-                    int heightInDp = (int) getResources().getDimension(R.dimen.image_height);
-                    params.width = widthInDp;
-                    params.height = heightInDp;
-                    imageView.setLayoutParams(params);
-                    gridLayout.addView(imageView);
-                }
+        int index = 0;
+        for (int i = 0; i < gridLayout.getRowCount(); i++) {
+            for (int j = 0; j < gridLayout.getColumnCount(); j++) {
+                imageView = new ImageView(this);
+                imageView.setImageResource(R.drawable.circuloazul);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setAdjustViewBounds(true);
+                imageView.setId(index++);
+                GridLayout.Spec rowSpec = GridLayout.spec(i);
+                GridLayout.Spec colSpec = GridLayout.spec(j);
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, colSpec);
+                int widthInDp = (int) getResources().getDimension(R.dimen.image_width);
+                int heightInDp = (int) getResources().getDimension(R.dimen.image_height);
+                params.width = widthInDp;
+                params.height = heightInDp;
+                imageView.setLayoutParams(params);
+                gridLayout.addView(imageView);
             }
         }
-        public void finish(){
-        switch (senkuTable.finishGame()){
+    }
+
+    public void finish() {
+        switch (senkuTable.finishGame()) {
             case 0:
                 Toast.makeText(this, "Perdiste", Toast.LENGTH_SHORT).show();
+                saveScore();
+                isRunning = false;
                 break;
             case 1:
                 Toast.makeText(this, "Ganaste", Toast.LENGTH_SHORT).show();
+                saveScore();
+                isRunning = false;
                 break;
             case -1:
                 break;
         }
-        }
-    public void tableToView(){
+    }
+
+    public void tableToView() {
         int index = 0;
 
         for (int i = 0; i < gridLayout.getRowCount(); i++) {
@@ -176,12 +208,11 @@ public class Senku extends AppCompatActivity {
                 View view = gridLayout.getChildAt(index);
                 if (view instanceof ImageView) {
                     ImageView imageView = (ImageView) view;
-                    if (senkuTable.getValueAt(i,j) == 1) {
+                    if (senkuTable.getValueAt(i, j) == 1) {
                         imageView.setImageResource(R.drawable.circuloazul);
-                    } else if (senkuTable.getValueAt(i,j) == 0) {
+                    } else if (senkuTable.getValueAt(i, j) == 0) {
                         imageView.setImageResource(R.drawable.white);
-                    }
-                    else {
+                    } else {
                         imageView.setVisibility(View.GONE);
                     }
                 }
@@ -199,6 +230,24 @@ public class Senku extends AppCompatActivity {
         float rowHeight = gridLayout.getHeight() / gridLayout.getRowCount();
         return (int) (y / rowHeight);
     }
+
+    private void saveScore() {
+        int score = 60 * minutos + segundos;
+        dbHelper.insertScoreData(data, userName, score);
+    }
+
+    public void getMaxScore() {
+        int maxScore = dbHelper.getMaxScoreSenku(data, userName);
+        int seconds = maxScore;
+
+        int minutes = seconds / 60;
+        int remainingSeconds = seconds % 60;
+
+        String time = String.format("%02d:%02d", minutes, remainingSeconds);
+        tvBest.setText("Best: " + time);
+
+    }
+
 
 }
 

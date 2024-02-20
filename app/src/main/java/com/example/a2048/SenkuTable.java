@@ -9,7 +9,7 @@ public class SenkuTable {
     private static Context context;
     private int[][] table = new int[7][7];
     private int active = 0;
-    private int[][] tableUndo = new int[7][7];
+    private int[][] tableUndo ;
 
     public SenkuTable() {
         //inicializar tablero
@@ -121,7 +121,6 @@ public class SenkuTable {
             tableUndo = null;
             active--;
         }
-
 
     }
 
