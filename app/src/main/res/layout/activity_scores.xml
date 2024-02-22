@@ -19,12 +19,13 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="154dp"
-        android:layout_height="78dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginBottom="519dp"
         android:text="Game 2048"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/rv2048"
+        app:layout_constraintBottom_toTopOf="@+id/btOrder2048"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
@@ -51,5 +52,38 @@
         android:background="#C28EDD"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btOrder2048"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="32dp"
+        android:text="Order Scores 2048"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/btOrderSenku"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="Order Scores Senku"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear All Data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.453"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.862" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

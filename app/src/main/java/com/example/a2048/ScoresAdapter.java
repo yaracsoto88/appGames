@@ -46,7 +46,9 @@ class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return mScoresData.size();
+
     }
+
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -74,4 +76,6 @@ class ScoresAdapter extends RecyclerView.Adapter<ScoresAdapter.ViewHolder> {
             // Handle item click if needed.
         }
     }
+    // Método para eliminar una puntuación
+
 }

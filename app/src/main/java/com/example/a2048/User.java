@@ -1,6 +1,8 @@
 package com.example.a2048;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -37,8 +39,11 @@ public class User extends AppCompatActivity {
                     Snackbar.make(v, "Please fill all the fields", Snackbar.LENGTH_LONG).show();
                 } else {
                     if (dbHelper.checkUserData(user, password)) {
+                        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("ActiveUser", user);
+                        editor.apply();
                         Intent intent = new Intent(User.this, Menu.class);
-                        intent.putExtra("UserName", user);
                         startActivity(intent);
                     } else {
                         Snackbar.make(v, "Invalid user or password", Snackbar.LENGTH_LONG).show();

@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.Arrays;
+
 
 public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
@@ -82,5 +84,15 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         return cursor.getInt(0);
     }
+
+
+    public void deleteScore(String tabla, String name, int score){
+        SQLiteDatabase DB = this.getWritableDatabase();
+        DB.execSQL("DELETE FROM " + tabla + " WHERE name = ? AND score = ?", new String[]{name, String.valueOf(score)});
+    }
+
+
+
+
 
 }

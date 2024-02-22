@@ -41,8 +41,8 @@ public class game2048 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        userName = intent.getStringExtra("UserName");
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        userName = sharedPreferences.getString("ActiveUser", "");
         setContentView(R.layout.activity_game2048);
         score = findViewById(R.id.score);
         tvBest = findViewById(R.id.best);

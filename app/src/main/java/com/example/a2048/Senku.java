@@ -1,6 +1,8 @@
 package com.example.a2048;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -39,8 +41,8 @@ public class Senku extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        userName = intent.getStringExtra("UserName");
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        userName = sharedPreferences.getString("ActiveUser", "");
         setContentView(R.layout.activity_senku);
         gridLayout = findViewById(R.id.gridLayout);
         btUndo = findViewById(R.id.btUndoMove);
