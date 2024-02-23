@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -31,12 +32,10 @@ public class Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(this);
-        Intent intent = getIntent();
-        userName = intent.getStringExtra("UserName");
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        userName = sharedPreferences.getString("ActiveUser", "");
 
-        title = findViewById(R.id.tvTitle);
-        Animation slideInLeft = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
-        title.startAnimation(slideInLeft);
+
 
         // Initialize the RecyclerView.
         mRecyclerView = findViewById(R.id.recyclerView);
@@ -45,17 +44,19 @@ public class Menu extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         imgUser = findViewById(R.id.imgUser);
-        imgUser.setImageResource(R.drawable.img_user);
         loadImage();
 
     }
     private void loadImage(){
-        try { Bitmap bitmapImage= dbHelper.getPhoto("yara");
+        try {
+            Bitmap bitmapImage= dbHelper.getPhoto(userName);
             imgUser.setImageBitmap(bitmapImage);
+
         }
         catch (Exception e){
             imgUser.setImageResource(R.drawable.img_user);
+        }
 
 
     }
-}}
+}

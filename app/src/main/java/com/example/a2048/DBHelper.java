@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
-        super(context, "ScoreData.db", null, 1);
+        super(context, "ScoreData.db", null, 2);
     }
 
     @Override
@@ -33,7 +33,10 @@ public class DBHelper extends SQLiteOpenHelper {
         DB.execSQL("drop Table if exists ScoreDataSenku");
         DB.execSQL("drop Table if exists UserData");
 
+
     }
+
+
 
     public Boolean insertScoreData(String tabla, String name, int score) {
         SQLiteDatabase DB = this.getWritableDatabase();
