@@ -65,7 +65,8 @@ public class User extends AppCompatActivity {
                     if (dbHelper.checkUserData(user,password)) {
                         Snackbar.make(v, "User already exists", Snackbar.LENGTH_LONG).show();
                     } else {
-                        dbHelper.insertUserData(user, password);
+
+                        dbHelper.insertUserData(user, password,null);
                         Snackbar.make(v, "User registered", Snackbar.LENGTH_LONG).show();
                     }
                 }

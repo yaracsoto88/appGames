@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -23,11 +24,13 @@ public class Menu extends AppCompatActivity {
     private TextView title;
     String userName;
     private ImageView imgUser;
+    DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dbHelper = new DBHelper(this);
         Intent intent = getIntent();
         userName = intent.getStringExtra("UserName");
 
@@ -43,8 +46,16 @@ public class Menu extends AppCompatActivity {
 
         imgUser = findViewById(R.id.imgUser);
         imgUser.setImageResource(R.drawable.img_user);
+        loadImage();
 
+    }
+    private void loadImage(){
+        try { Bitmap bitmapImage= dbHelper.getPhoto("yara");
+            imgUser.setImageBitmap(bitmapImage);
+        }
+        catch (Exception e){
+            imgUser.setImageResource(R.drawable.img_user);
 
 
     }
-}
+}}

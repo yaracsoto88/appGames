@@ -5,7 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import java.io.ByteArrayOutputStream;
+import java.sql.Blob;
 import java.util.Arrays;
 
 
@@ -18,7 +22,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase DB) {
         DB.execSQL("create Table ScoreData2048(name TEXT, score INT)");
         DB.execSQL("create Table ScoreDataSenku(name TEXT, score INT)");
-        DB.execSQL("create Table UserData(name TEXT, password TEXT)");
+        DB.execSQL("create Table UserData(name TEXT, password TEXT,userPhoto BLOB)");
+
 
     }
 
@@ -27,6 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
         DB.execSQL("drop Table if exists ScoreData2048");
         DB.execSQL("drop Table if exists ScoreDataSenku");
         DB.execSQL("drop Table if exists UserData");
+
     }
 
     public Boolean insertScoreData(String tabla, String name, int score) {
@@ -42,13 +48,45 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-    public void insertUserData(String name, String password) {
+    public void insertUserData(String name, String password, byte[] userPhoto) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
         contentValues.put("password", password);
+        contentValues.put("userPhoto", userPhoto);
         DB.insert("UserData", null, contentValues);
     }
+    public void setPhoto(String name, Bitmap userPhoto){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        userPhoto.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] photo = baos.toByteArray();
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("userPhoto", photo);
+        // Update the photo of the user
+        DB.update("UserData", contentValues, "name = ?", new String[]{name});
+    }
+    public Bitmap getPhoto(String name) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor cursor = DB.rawQuery("SELECT userPhoto FROM UserData WHERE name = ?", new String[]{name});
+
+        Bitmap photoBitmap = null;
+
+        if (cursor != null && cursor.moveToFirst()) {
+            byte[] photo = cursor.getBlob(0);
+
+            // Convert byte array to Bitmap without using DbBitmapUtility
+            if (photo != null && photo.length > 0) {
+                photoBitmap = BitmapFactory.decodeByteArray(photo, 0, photo.length);
+            }
+
+            cursor.close();
+        }
+
+        return photoBitmap;
+    }
+
+
     public Boolean checkUserData(String name, String password){
         SQLiteDatabase DB = this.getWritableDatabase();
         Cursor cursor = DB.rawQuery("Select * from UserData where name = ? and password = ?", new String[]{name, password});

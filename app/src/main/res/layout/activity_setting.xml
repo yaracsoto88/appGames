@@ -13,4 +13,20 @@
         android:text="Change profile picture"
         tools:layout_editor_absoluteX="52dp"
         tools:layout_editor_absoluteY="99dp" />
+
+    <ImageView
+        android:id="@+id/imgSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="94dp"
+        tools:layout_editor_absoluteY="184dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/btBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to Menu"
+        tools:layout_editor_absoluteX="43dp"
+        tools:layout_editor_absoluteY="610dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
