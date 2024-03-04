@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
@@ -19,6 +20,7 @@ public class User extends AppCompatActivity {
     Button btLogin;
     Button btRegister;
     DBHelper dbHelper;
+    Setting setting;
     ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class User extends AppCompatActivity {
                 String user = etUser.getText().toString();
                 String password = etPassword.getText().toString();
                 if (user.isEmpty() || password.isEmpty()) {
-                    Snackbar.make(v, "Please fill all the fields", Snackbar.LENGTH_LONG).show();
+                    mensaje("Please fill all the fields");
                 } else {
                     if (dbHelper.checkUserData(user, password)) {
                         SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
@@ -46,8 +48,7 @@ public class User extends AppCompatActivity {
                         Intent intent = new Intent(User.this, Menu.class);
                         startActivity(intent);
                     } else {
-                        Snackbar.make(v, "Invalid user or password", Snackbar.LENGTH_LONG).show();
-
+                        mensaje("User does not exist. Please register first.");
                     }
                 }
             }
@@ -60,19 +61,26 @@ public class User extends AppCompatActivity {
                 String user = etUser.getText().toString();
                 String password = etPassword.getText().toString();
                 if (user.isEmpty() || password.isEmpty()) {
-                    Snackbar.make(v, "Please fill all the fields", Snackbar.LENGTH_LONG).show();
+                   mensaje("Please fill all the fields");
                 } else {
                     if (dbHelper.checkUserData(user,password)) {
-                        Snackbar.make(v, "User already exists", Snackbar.LENGTH_LONG).show();
+                        mensaje("User already exists");
                     } else {
 
                         dbHelper.insertUserData(user, password,null);
-                        Snackbar.make(v, "User registered", Snackbar.LENGTH_LONG).show();
+                       mensaje("User registered successfully");
                     }
                 }
             }
         });
 
 
+
+    }    public void mensaje(String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(User.this);
+        builder.setMessage(mensaje);
+        builder.setPositiveButton("OK", null);
+        builder.create();
+        builder.show();
     }
 }
