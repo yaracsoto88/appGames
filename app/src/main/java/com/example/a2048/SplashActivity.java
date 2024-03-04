@@ -18,8 +18,7 @@ public class SplashActivity extends AppCompatActivity {
         Animation splashAnim = AnimationUtils.loadAnimation(this, R.anim.splash_animation);
         ImageView imageView = findViewById(R.id.game);
         imageView.startAnimation(splashAnim);
-        TextView textView = findViewById(R.id.gameOnTextView);
-        textView.startAnimation(splashAnim);
+
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         splashAnim.setAnimationListener(new Animation.AnimationListener() {

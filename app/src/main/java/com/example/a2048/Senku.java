@@ -3,8 +3,11 @@ package com.example.a2048;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -142,24 +145,47 @@ public class Senku extends AppCompatActivity {
 
     private void touch(int row, int column) {
         if (isRunning) {
-            Log.d("Senku", "Touch: " + row + " " + column);
-
             if (initialX == -1 && initialY == -1) {
                 initialX = row;
                 initialY = column;
+                addBrightCircle(row, column);
+
             } else {
-                System.out.println("initialX: " + initialX + " initialY: " + initialY + " row: " + row + " column: " + column);
-                if (!senkuTable.move(initialX, initialY, row, column)) {
-                    Toast.makeText(this, "Movimiento invalido", Toast.LENGTH_SHORT).show();
+                //poner un toast si no se puede mover
+                if(!senkuTable.move(initialX, initialY, row, column)){
+                    Toast.makeText(this, "Invalid move. Please, try again.", Toast.LENGTH_SHORT).show();
+                    //TODO:arreglarlo
+                    // vibrateInvalidMove();
                 }
+                senkuTable.move(initialX, initialY, row, column);
                 initialX = -1;
                 initialY = -1;
+                tableToView();
 
             }
-            tableToView();
             finish();
-
         }
+    }
+    // Método para vibrar el dispositivo
+    private void vibrateInvalidMove() {
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (Build.VERSION.SDK_INT >= 26) {
+            // Vibrar durante 100 milisegundos
+            vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            // Vibrar durante 100 milisegundos
+            vibrator.vibrate(100);
+        }
+    }
+
+    private void addBrightCircle(int row, int column) {
+        int index = row * 7 + column;
+        View view = gridLayout.getChildAt(index);
+        if (view instanceof ImageView) {
+            ImageView imageView = (ImageView) view;
+            imageView.setImageResource(R.drawable.circuloazulbrillante);
+        }
+
     }
 
     private void initializeImageViews() {
@@ -246,7 +272,7 @@ public class Senku extends AppCompatActivity {
         int remainingSeconds = seconds % 60;
 
         String time = String.format("%02d:%02d", minutes, remainingSeconds);
-        tvBest.setText("Best: " + time);
+        tvBest.setText("Best Score\n" + time);
 
     }
 

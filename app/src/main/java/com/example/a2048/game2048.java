@@ -36,6 +36,7 @@ public class game2048 extends AppCompatActivity {
     private static final String data = "ScoreData2048";
     private boolean isRunning = true;
     String userName;
+    Button btExit;
 
 
     @Override
@@ -63,6 +64,15 @@ public class game2048 extends AppCompatActivity {
                 //Reinicar el score
                 score.setText("0");
 
+
+            }
+        });
+        btExit = findViewById(R.id.btGoBack);
+        btExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(game2048.this, Menu.class);
+                startActivity(intent);
 
             }
         });

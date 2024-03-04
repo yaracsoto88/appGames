@@ -33,8 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/title2"
-
-            android:padding="8dp"
+            android:textSize="30sp"
+            android:padding="10dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             android:layout_alignBottom="@id/menuImage"
             style="@style/TextAppearance.AppCompat.Headline"/>

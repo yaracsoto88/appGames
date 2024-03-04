@@ -131,6 +131,12 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase DB = this.getWritableDatabase();
         DB.execSQL("DELETE FROM " + tabla + " WHERE name = ? AND score = ?", new String[]{name, String.valueOf(score)});
     }
+    public void updatePassword(String userName, String newPassword) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("password", newPassword);
+        DB.update("UserData", contentValues, "name = ?", new String[]{userName});
+    }
 
 
 

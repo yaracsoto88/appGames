@@ -27,6 +27,7 @@ public class ScoreActivity extends AppCompatActivity {
    Button btOrderScore2048;
    Button btOrderScoreSenku;
    Button btDeleteScore;
+   Button btMenu;
 
 
 
@@ -85,6 +86,14 @@ public class ScoreActivity extends AppCompatActivity {
                 dataScoresSenku.clear();
                 mAdapter2048.notifyDataSetChanged();
                 mAdapterSenku.notifyDataSetChanged();
+            }
+        });
+        btMenu = findViewById(R.id.btMenu);
+        btMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ScoreActivity.this, Menu.class);
+                startActivity(intent);
             }
         });
 

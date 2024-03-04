@@ -7,26 +7,11 @@
 
     <ImageView
         android:id="@+id/game"
-        android:layout_width="417dp"
-        android:layout_height="323dp"
-        app:layout_constraintBottom_toTopOf="@+id/gameOnTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.22"
-        android:background="@drawable/back_image"
-        tools:ignore="ContentDescription,ImageContrastCheck,VisualLintBounds" />
-
-    <TextView
-        android:id="@+id/gameOnTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Game On"
-        android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@+id/game"
+        android:background="@drawable/back_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-       />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,ImageContrastCheck,VisualLintBounds" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

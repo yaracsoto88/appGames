@@ -1,27 +1,12 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Translate animation -->
     <translate
         android:duration="2000"
-        android:fromXDelta="-100%"
-        android:fromYDelta="-100%"
         android:toXDelta="0%"
         android:toYDelta="0%" />
 
-    <!-- Scale animation -->
-    <scale
+    <alpha
         android:duration="2000"
-        android:fromXScale="0.5"
-        android:fromYScale="0.5"
-        android:pivotX="50%"
-        android:pivotY="50%"
-        android:toXScale="1.0"
-        android:toYScale="1.0" />
+        android:fromAlpha="0.0"
+        android:toAlpha="2.0" />
 
-    <!-- Rotate animation -->
-    <rotate
-        android:duration="2000"
-        android:fromDegrees="0"
-        android:pivotX="50%"
-        android:pivotY="50%"
-        android:toDegrees="360" />
 </set>

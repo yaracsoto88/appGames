@@ -2,6 +2,7 @@ package com.example.a2048;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,14 +17,18 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.io.InputStream;
 
 public class Setting extends AppCompatActivity {
     Button btProfile;
 
     private String currentPhotoPath;
     DBHelper dbHelper;
-    ImageView imgSetting;
+
     private ActivityResultLauncher<Intent> galleryLauncher;
     String userName;
     Button btBack;
@@ -37,7 +42,7 @@ public class Setting extends AppCompatActivity {
         dbHelper = new DBHelper(this);
         SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         userName = sharedPreferences.getString("ActiveUser", "");
-        imgSetting = findViewById(R.id.imgSetting);
+
 
         btBack = findViewById(R.id.btBack);
         btBack.setOnClickListener((v -> {
@@ -55,22 +60,74 @@ public class Setting extends AppCompatActivity {
                         Intent data = result.getData();
                         if (data != null) {
                             Uri selectedImageUri = data.getData();
-                            Bitmap imageBitmap = getBitmapFromUri(selectedImageUri);
+                            if (checkImageSize(selectedImageUri)) {
+                                Bitmap imageBitmap = getBitmapFromUri(selectedImageUri);
+                                dbHelper.setPhoto(userName, imageBitmap);
+                                mensaje("Profile picture updated successfully");
+                            } else {
+                                mensaje("Error, Image too big. Max size 1MB");
+                            }
 
-                            dbHelper.setPhoto(userName, imageBitmap);
-                            imgSetting.setImageBitmap(imageBitmap);
 
                         }
                     }
                 }
         );
-        btChangePassword = findViewById(R.id.btChangePass);
+        btChangePassword = findViewById(R.id.btCambioContraseña);
+        btChangePassword.setOnClickListener((v -> {
+            changePass();
+        }));
+
 
     }
+
+    private boolean checkImageSize(Uri selectedImageUri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(selectedImageUri);
+            int fileSize = inputStream.available();
+            inputStream.close();
+            return fileSize <= (1024 * 1024);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private void changePass() {
+        EditText etPassword = findViewById(R.id.editContraseñaActual);
+        EditText etNewPassword = findViewById(R.id.editNuevaContraseña);
+        String password = etPassword.getText().toString();
+        String newPassword = etNewPassword.getText().toString();
+        if (password.equals("") || newPassword.equals("")) {
+            etPassword.setError("Fill in the blanks");
+            etNewPassword.setError("Fill in the blanks");
+            mensaje("Fill in the blanks");
+        } else {
+            if (dbHelper.checkUserData(userName, password)) {
+                dbHelper.updatePassword(userName, newPassword);
+                etPassword.setText("");
+                etNewPassword.setText("");
+                mensaje("Password changed successfully");
+
+            } else {
+                mensaje("Incorrect password");
+            }
+        }
+    }
+
+    private void mensaje(String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Setting.this);
+        builder.setMessage(mensaje);
+        builder.setPositiveButton("OK", null);
+        builder.create();
+        builder.show();
+    }
+
     private void captureImage() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         galleryLauncher.launch(intent);
     }
+
     private Bitmap getBitmapFromUri(Uri uri) {
         try {
             return MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
