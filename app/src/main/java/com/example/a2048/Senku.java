@@ -154,8 +154,7 @@ public class Senku extends AppCompatActivity {
                 //poner un toast si no se puede mover
                 if(!senkuTable.move(initialX, initialY, row, column)){
                     Toast.makeText(this, "Invalid move. Please, try again.", Toast.LENGTH_SHORT).show();
-                    //TODO:arreglarlo
-                    // vibrateInvalidMove();
+                    vibrateInvalidMove();
                 }
                 senkuTable.move(initialX, initialY, row, column);
                 initialX = -1;
@@ -169,13 +168,8 @@ public class Senku extends AppCompatActivity {
     // Método para vibrar el dispositivo
     private void vibrateInvalidMove() {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        if (Build.VERSION.SDK_INT >= 26) {
-            // Vibrar durante 100 milisegundos
-            vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
-        } else {
-            // Vibrar durante 100 milisegundos
-            vibrator.vibrate(100);
-        }
+        vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+
     }
 
     private void addBrightCircle(int row, int column) {
@@ -272,7 +266,7 @@ public class Senku extends AppCompatActivity {
         int remainingSeconds = seconds % 60;
 
         String time = String.format("%02d:%02d", minutes, remainingSeconds);
-        tvBest.setText("Best Score\n" + time);
+        tvBest.setText(time);
 
     }
 

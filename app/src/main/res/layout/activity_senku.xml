@@ -56,11 +56,22 @@
         android:layout_marginTop="120dp"
         android:text="TextView"
         android:textColor="@color/lightblue"
-        android:textSize="48sp"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="75dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/medal"
+        app:layout_constraintBottom_toTopOf="@+id/tvBest"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.898"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvBest"
@@ -78,13 +89,15 @@
     <Button
         android:id="@+id/btMenu"
         style="@style/ButtonStyleSenku"
-        android:layout_width="142dp"
-        android:layout_height="67dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginBottom="36dp"
-        android:text="Go To Menu"
-        android:textSize="20sp"
+        android:layout_width="134dp"
+        android:layout_height="62dp"
+        android:text="Menu"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.029"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.975" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

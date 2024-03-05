@@ -11,7 +11,7 @@
         android:id="@+id/tableLayout"
         android:layout_width="378dp"
         android:layout_height="456dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="4dp"
         android:background="@color/beige"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -124,6 +124,23 @@
     </TableLayout>
 
     <Button
+        android:id="@+id/btGoBack"
+        android:layout_width="112dp"
+        android:layout_height="59dp"
+
+        android:backgroundTint="@color/beige"
+        android:color="#FFA726"
+
+        android:text="Menu"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.107"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.969" />
+
+    <Button
         android:id="@+id/btNewGame"
         android:layout_width="133dp"
         android:layout_height="66dp"
@@ -137,23 +154,6 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btGoBack"
-        android:layout_width="133dp"
-        android:layout_height="66dp"
-
-        android:backgroundTint="@color/beige"
-        android:color="#FFA726"
-
-        android:text="Go To Menu"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.969" />
 
     <Button
         android:id="@+id/btUndo"
@@ -184,7 +184,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.172" />
+        app:layout_constraintVertical_bias="0.197" />
 
     <TextView
         android:id="@+id/score"
@@ -195,34 +195,32 @@
         android:text="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.44"
+        app:layout_constraintHorizontal_bias="0.421"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.172" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="234dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="12dp"
-        android:gravity="center"
-        android:text="2048"
-        android:textColor="@color/c256"
-        android:textSize="48sp"
-        app:layout_constraintEnd_toStartOf="@+id/btNewGame"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintVertical_bias="0.197" />
 
     <TextView
         android:id="@+id/tvTimer"
         android:layout_width="170dp"
         android:layout_height="39dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="44dp"
         android:gravity="center"
         android:textColor="@color/c256"
         android:textSize="34sp"
         app:layout_constraintEnd_toStartOf="@+id/btNewGame"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="146dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.173"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

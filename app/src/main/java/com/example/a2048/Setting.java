@@ -33,6 +33,7 @@ public class Setting extends AppCompatActivity {
     String userName;
     Button btBack;
     Button btChangePassword;
+    ImageView ivProfile;
 
 
     @Override
@@ -49,6 +50,7 @@ public class Setting extends AppCompatActivity {
             Intent intent = new Intent(Setting.this, Menu.class);
             startActivity(intent);
         }));
+        ivProfile = findViewById(R.id.imageUser);
 
         btProfile = findViewById(R.id.btProfile);
         btProfile.setOnClickListener((v -> captureImage()));
@@ -63,7 +65,9 @@ public class Setting extends AppCompatActivity {
                             if (checkImageSize(selectedImageUri)) {
                                 Bitmap imageBitmap = getBitmapFromUri(selectedImageUri);
                                 dbHelper.setPhoto(userName, imageBitmap);
+                                ivProfile.setImageBitmap(imageBitmap);
                                 mensaje("Profile picture updated successfully");
+
                             } else {
                                 mensaje("Error, Image too big. Max size 1MB");
                             }

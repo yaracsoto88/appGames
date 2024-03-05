@@ -27,6 +27,7 @@ public class Menu extends AppCompatActivity {
     private ImageView imgUser;
     DBHelper dbHelper;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,9 @@ public class Menu extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         userName = sharedPreferences.getString("ActiveUser", "");
 
-
+        title = findViewById(R.id.tvWelcome);
+        title.setText("Welcome " + userName);
+        startAnimation(title);
 
         // Initialize the RecyclerView.
         mRecyclerView = findViewById(R.id.recyclerView);
@@ -47,16 +50,21 @@ public class Menu extends AppCompatActivity {
         loadImage();
 
     }
-    private void loadImage(){
+
+    private void loadImage() {
         try {
-            Bitmap bitmapImage= dbHelper.getPhoto(userName);
+            Bitmap bitmapImage = dbHelper.getPhoto(userName);
             imgUser.setImageBitmap(bitmapImage);
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             imgUser.setImageResource(R.drawable.img_user);
         }
 
 
+    }
+
+    private void startAnimation(View view) {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
+        view.startAnimation(animation);
     }
 }
