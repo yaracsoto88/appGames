@@ -36,7 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Welcome"
-            android:textSize="27sp" />
+            android:textSize="27sp"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

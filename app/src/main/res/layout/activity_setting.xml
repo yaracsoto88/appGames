@@ -7,20 +7,6 @@
     android:background="#4A6D97"
     tools:context=".Setting">
 
-    <Button
-        android:id="@+id/btBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/lightblue"
-        android:text="Menu"
-        android:textColor="@color/blue"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
@@ -41,9 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
+        android:gravity="center"
         android:hint="Actual Password"
         android:inputType="textPassword"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,8 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="New Password"
         android:gravity="center"
+        android:hint="New Password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,21 +65,31 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="24dp"
         android:gravity="center"
         android:text="Click to change your Profile "
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.192"
+        app:layout_constraintHorizontal_bias="0.196"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btCambioContraseña" />
+
+    <ImageView
+        android:id="@+id/imageUser"
+        android:layout_width="141dp"
+        android:layout_height="175dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        tools:srcCompat="@drawable/img_user" />
 
     <Button
         android:id="@+id/btProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:backgroundTint="@color/lightblue"
         android:text="Search Gallery"
@@ -102,10 +98,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
+    <Button
+        android:id="@+id/btBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="@color/lightblue"
+        android:text="Menu"
+        android:textColor="@color/blue"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btCloseSession"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="@color/lightblue"
+        android:text="Close Session"
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.82"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="105dp"
-        android:layout_height="103dp"
+        android:layout_width="106dp"
+        android:layout_height="111dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -113,15 +137,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.026"
         app:srcCompat="@drawable/locked" />
-
-    <ImageView
-        android:id="@+id/imageUser"
-        android:layout_width="128dp"
-        android:layout_height="155dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"
-        tools:srcCompat="@drawable/img_user" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

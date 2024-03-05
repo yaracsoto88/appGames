@@ -8,50 +8,28 @@
     tools:context=".ScoreActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv2048"
-        android:layout_width="185dp"
-        android:layout_height="392dp"
-        android:layout_marginStart="8dp"
-        android:background="#EDC6C6"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="153dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="216dp"
-        android:text="2048"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv2048" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="155dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:text="Senku "
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvSenku" />
-
-    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSenku"
         android:layout_width="179dp"
         android:layout_height="393dp"
         android:layout_marginStart="12dp"
-        android:background="#EDC6C6"
+        android:background="#99ACD7E5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.076"
         app:layout_constraintStart_toEndOf="@+id/rv2048"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.497" />
+        app:layout_constraintVertical_bias="0.456" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv2048"
+        android:layout_width="185dp"
+        android:layout_height="392dp"
+        android:layout_marginStart="4dp"
+        android:background="#99ACD7E5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.455" />
 
     <Button
         android:id="@+id/btClear"
@@ -73,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
         android:backgroundTint="@color/lightblue"
-        android:text="Order Scores Senku"
+        android:text="Order Scores "
         android:textColor="@color/blue"
         android:textColorLink="#FFFFFF"
         android:textSize="16sp"
@@ -88,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="46dp"
         android:backgroundTint="@color/lightblue"
-        android:text="Order Scores 2048"
+        android:text="Order Scores"
         android:textColor="@color/blue"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -113,5 +91,52 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976" />
+
+    <ImageView
+        android:id="@+id/img2048"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="13dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv2048"
+        app:layout_constraintVertical_bias="0.0"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/imgSenku"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="108dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvSenku"
+        app:layout_constraintVertical_bias="0.0"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="4dp"
+        android:text="2048"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img2048" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="68dp"
+        android:text="Senku"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgSenku" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

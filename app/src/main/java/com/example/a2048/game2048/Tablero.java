@@ -1,20 +1,21 @@
-package com.example.a2048;
+package com.example.a2048.game2048;
 
 import android.content.Context;
 import android.util.Log;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
+
+import com.example.a2048.R;
+import com.example.a2048.game2048.Casilla;
 
 import java.util.Random;
 
 public class Tablero {
     private Casilla[][] board;
     private Casilla[][] boardUndo;
-
     private int score = 0;
     private boolean gameOver = false;
     private TableLayout tableLayout;
@@ -24,7 +25,7 @@ public class Tablero {
         this.tableLayout = tableLayout;
         this.context = context;
         this.initBoard(height, width);
-        this.conectarMatrizEnVista();
+        this.conectMatrixView();
     }
 
     public void initBoard(int height, int width) {
@@ -42,13 +43,13 @@ public class Tablero {
 
     public void undo() {
         if (boardUndo != null) {
-            board = copiarMatrix(boardUndo);
+            board = copyMatrix(boardUndo);
             boardUndo = null;
         }
-        conectarMatrizEnVista();
+        conectMatrixView();
     }
 
-    private Casilla[][] copiarMatrix(Casilla[][] source) {
+    private Casilla[][] copyMatrix(Casilla[][] source) {
         Casilla[][] copy = new Casilla[source.length][source[0].length];
         for (int i = 0; i < source.length; i++) {
             for (int j = 0; j < source[0].length; j++) {
@@ -56,11 +57,10 @@ public class Tablero {
                 copy[i][j].setValor(source[i][j].getValor());
             }
         }
-        Log.d("tag", "copiarMatrix: ");
         return copy;
     }
 
-    public void conectarMatrizEnVista() {
+    public void conectMatrixView() {
         for (int i = 0; i < 4; i++) {
             TableRow row = (TableRow) tableLayout.getChildAt(i);
             for (int j = 0; j < 4; j++) {
@@ -141,7 +141,7 @@ public class Tablero {
 
     public void up() {
         if (!gameOver) {
-            boardUndo = copiarMatrix(board);
+            boardUndo = copyMatrix(board);
             //al empezar por i=1 nos aseguramos de que no se sale del tablero y nos saltamos la primera fila
             for (int i = 1; i < board.length; i++) {
                 // Itera sobre las columnas
@@ -153,8 +153,7 @@ public class Tablero {
                 }
             }
 
-
-            rePintar();
+            repaint();
         }
     }
 
@@ -186,7 +185,7 @@ public class Tablero {
 
     public void down() {
         if (!gameOver) {
-            boardUndo = copiarMatrix(board);
+            boardUndo = copyMatrix(board);
             //itera desde la segunda fila hasta la primera (i>=0) y comienza desde la penultima fila, no la ultima
             //se mueve de abajo hacia arriba
             for (int i = board.length - 2; i >= 0; i--) {
@@ -199,7 +198,7 @@ public class Tablero {
                     }
                 }
             }
-            rePintar();
+            repaint();
         }
 
     }
@@ -229,7 +228,7 @@ public class Tablero {
 
     public void left() {
         if (!gameOver) {
-            boardUndo = copiarMatrix(board);
+            boardUndo = copyMatrix(board);
             for (int i = 0; i < board.length; i++) {
                 //desde la 2a columna de cada fila hasta la última
                 for (int j = 1; j < board[i].length; j++) {
@@ -239,7 +238,7 @@ public class Tablero {
                     }
                 }
             }
-            rePintar();
+            repaint();
         }
     }
 
@@ -267,7 +266,7 @@ public class Tablero {
 
     public void right() {
         if (!gameOver) {
-            boardUndo = copiarMatrix(board);
+            boardUndo = copyMatrix(board);
             for (int i = 0; i < board.length; i++) {
                 //empezamos en la penultima columna
                 //itera desde la penultima columna hasta la primera (j>=0)
@@ -279,7 +278,7 @@ public class Tablero {
                     }
                 }
             }
-            rePintar();
+            repaint();
         }
     }
 
@@ -303,9 +302,9 @@ public class Tablero {
         }
     }
 
-    private void rePintar() {
+    private void repaint() {
         addCasilla();
-        conectarMatrizEnVista();
+        conectMatrixView();
         Log.d("2048", this.toString());
     }
 

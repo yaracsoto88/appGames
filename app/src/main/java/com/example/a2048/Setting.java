@@ -5,21 +5,16 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.io.InputStream;
 
@@ -34,6 +29,7 @@ public class Setting extends AppCompatActivity {
     Button btBack;
     Button btChangePassword;
     ImageView ivProfile;
+    Button btCloseSession;
 
 
     @Override
@@ -54,6 +50,7 @@ public class Setting extends AppCompatActivity {
 
         btProfile = findViewById(R.id.btProfile);
         btProfile.setOnClickListener((v -> captureImage()));
+        loadImage();
 
         galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -65,7 +62,7 @@ public class Setting extends AppCompatActivity {
                             if (checkImageSize(selectedImageUri)) {
                                 Bitmap imageBitmap = getBitmapFromUri(selectedImageUri);
                                 dbHelper.setPhoto(userName, imageBitmap);
-                                ivProfile.setImageBitmap(imageBitmap);
+                                loadImage();
                                 mensaje("Profile picture updated successfully");
 
                             } else {
@@ -81,9 +78,62 @@ public class Setting extends AppCompatActivity {
         btChangePassword.setOnClickListener((v -> {
             changePass();
         }));
+        btCloseSession = findViewById(R.id.btCloseSession);
+        btCloseSession.setOnClickListener((v -> {
+            mostrarMensajeFinSesion();
+        }));
+    }
+    private void loadImage() {
+        try {
+            Bitmap bitmapImage = dbHelper.getPhoto(userName);
+            if (bitmapImage != null && bitmapImage.getByteCount() > 0) {
+                ivProfile.setImageBitmap(bitmapImage);
+            } else {
+                ivProfile.setImageResource(R.drawable.img_user);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
+
+
+    private void mostrarMensajeFinSesion() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to close this session?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        closeSession();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void closeSession() {
+        if (mensajeFinSession("Session closed")) {
+            SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("ActiveUser", "");
+            editor.apply();
+            Intent intent = new Intent(Setting.this, User.class);
+            startActivity(intent);
+
+        }
+    }
+
+    private boolean mensajeFinSession(String mensaje) {
+        return mensaje.equals("Session closed");
+    }
+
 
     private boolean checkImageSize(Uri selectedImageUri) {
         try {

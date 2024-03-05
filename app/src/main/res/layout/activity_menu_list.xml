@@ -34,7 +34,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/title2"
             android:textSize="30sp"
-            android:padding="10dp"
+            android:padding="15dp"
+            android:textColor="@color/black"
+            android:textStyle="italic"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             android:layout_alignBottom="@id/menuImage"
             style="@style/TextAppearance.AppCompat.Headline"/>

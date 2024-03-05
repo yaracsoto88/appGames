@@ -4,8 +4,6 @@ public class Score {
     private String namePlayer;
     private String score;
 
-    public Score() {
-    }
 
     public Score(String namePlayer, String score) {
         this.namePlayer = namePlayer;
@@ -30,12 +28,5 @@ public class Score {
         return this.score;
     }
 
-    public void setNamePlayer(String namePlayer) {
-        this.namePlayer = namePlayer;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
 
 }

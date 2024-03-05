@@ -5,14 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#4DFFFFFF"
+    android:gravity="center">
 
     <!-- TextView for displaying the namePlayer -->
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textColor="@color/fondo"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:layout_marginTop="8dp"/>
 
@@ -21,6 +24,7 @@
         android:id="@+id/subTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:layout_marginTop="4dp"/>
 

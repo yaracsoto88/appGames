@@ -1,9 +1,9 @@
-package com.example.a2048;
+package com.example.a2048.senku;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.VibrationEffect;
@@ -13,13 +13,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
-
 import android.widget.ImageView;
-
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.a2048.DBHelper;
+import com.example.a2048.Menu;
+import com.example.a2048.R;
 
 
 public class Senku extends AppCompatActivity {
@@ -32,31 +34,48 @@ public class Senku extends AppCompatActivity {
     private Button btRestart;
     private TextView tvTimer;
     private Handler handler;
-    private int segundos = 0;
-    private int minutos = 0;
+    private int seconds = 0;
+    private int minutes = 0;
     private DBHelper dbHelper;
     private boolean isRunning = true;
-
     private Button btMenu;
     private TextView tvBest;
-    String userName;
+    private String userName;
+    private MediaPlayer mediaPlayerOver;
+    private MediaPlayer mediaPlayerWin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_senku);
         SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
         userName = sharedPreferences.getString("ActiveUser", "");
-        setContentView(R.layout.activity_senku);
-        gridLayout = findViewById(R.id.gridLayout);
-        btUndo = findViewById(R.id.btUndoMove);
-        btMenu = findViewById(R.id.btMenu);
-        tvBest = findViewById(R.id.tvBest);
-        senkuTable = new SenkuTable();
         dbHelper = new DBHelper(this);
+        initView();
+        putListeners();
+
+        senkuTable = new SenkuTable();
+        mediaPlayerOver = MediaPlayer.create(this, R.raw.gameover);
+        mediaPlayerWin = MediaPlayer.create(this, R.raw.gamewon);
 
         initializeImageViews();
         tableToView();
         getMaxScore();
+
+        handler = new Handler();
+        updateTime();
+    }
+
+    private void initView() {
+        gridLayout = findViewById(R.id.gridLayout);
+        btUndo = findViewById(R.id.btUndoMove);
+        btMenu = findViewById(R.id.btMenu);
+        tvBest = findViewById(R.id.tvBest);
+        btRestart = findViewById(R.id.btReset);
+        tvTimer = findViewById(R.id.textView);
+    }
+
+    private void putListeners() {
         gridLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
@@ -83,7 +102,7 @@ public class Senku extends AppCompatActivity {
 
             }
         });
-        btRestart = findViewById(R.id.btReset);
+
         btRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,8 +110,8 @@ public class Senku extends AppCompatActivity {
                 restart();
                 tableToView();
                 isRunning = true;
-                segundos = 0;
-                minutos = 0;
+                seconds = 0;
+                minutes = 0;
 
             }
         });
@@ -105,26 +124,20 @@ public class Senku extends AppCompatActivity {
             }
         });
 
-        tvTimer = findViewById(R.id.textView);
-        handler = new Handler();
-        actualizarTiempo();
     }
 
-    private void actualizarTiempo() {
-        int minutosActuales = segundos / 60;
-        int segundosActuales = segundos % 60;
+    private void updateTime() {
+        int minutesActual = seconds / 60;
+        int secondsActual = seconds % 60;
 
-        // Formatear los minutos y segundos con dos dígitos
-        String tiempoFormateado = String.format("%02d:%02d", minutosActuales, segundosActuales);
+        String timeFormatted = String.format("%02d:%02d", minutesActual, secondsActual);
 
-        // Establecer el texto formateado en tu TextView
-        tvTimer.setText(tiempoFormateado);
-
-        segundos++;
+        tvTimer.setText(timeFormatted);
+        seconds++;
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                actualizarTiempo();
+                updateTime();
             }
         }, 1000);
     }
@@ -132,15 +145,23 @@ public class Senku extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Detener el temporizador al salir de la actividad
+        // detener temporizador y liberar los recursos del mediaPlayer
         handler.removeCallbacksAndMessages(null);
+        if (mediaPlayerOver != null) {
+            mediaPlayerOver.release();
+            mediaPlayerOver = null;
+        }
+        if (mediaPlayerWin != null) {
+            mediaPlayerWin.release();
+            mediaPlayerWin = null;
+        }
+
+
     }
 
     public void restart() {
         senkuTable = new SenkuTable();
         tableToView();
-
-
     }
 
     private void touch(int row, int column) {
@@ -149,10 +170,8 @@ public class Senku extends AppCompatActivity {
                 initialX = row;
                 initialY = column;
                 addBrightCircle(row, column);
-
             } else {
-                //poner un toast si no se puede mover
-                if(!senkuTable.move(initialX, initialY, row, column)){
+                if (!senkuTable.move(initialX, initialY, row, column)) {
                     Toast.makeText(this, "Invalid move. Please, try again.", Toast.LENGTH_SHORT).show();
                     vibrateInvalidMove();
                 }
@@ -165,11 +184,10 @@ public class Senku extends AppCompatActivity {
             finish();
         }
     }
-    // Método para vibrar el dispositivo
+
     private void vibrateInvalidMove() {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
-
     }
 
     private void addBrightCircle(int row, int column) {
@@ -179,7 +197,6 @@ public class Senku extends AppCompatActivity {
             ImageView imageView = (ImageView) view;
             imageView.setImageResource(R.drawable.circuloazulbrillante);
         }
-
     }
 
     private void initializeImageViews() {
@@ -208,14 +225,16 @@ public class Senku extends AppCompatActivity {
     public void finish() {
         switch (senkuTable.finishGame()) {
             case 0:
-                Toast.makeText(this, "Perdiste", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "You have lost :(", Toast.LENGTH_SHORT).show();
                 saveScore();
                 isRunning = false;
+                mediaPlayerOver.start();
                 break;
             case 1:
-                Toast.makeText(this, "Ganaste", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "You have won! :)", Toast.LENGTH_SHORT).show();
                 saveScore();
                 isRunning = false;
+                mediaPlayerWin.start();
                 break;
             case -1:
                 break;
@@ -254,7 +273,7 @@ public class Senku extends AppCompatActivity {
     }
 
     private void saveScore() {
-        int score = 60 * minutos + segundos;
+        int score = 60 * minutes + seconds;
         dbHelper.insertScoreData(data, userName, score);
     }
 
@@ -267,10 +286,7 @@ public class Senku extends AppCompatActivity {
 
         String time = String.format("%02d:%02d", minutes, remainingSeconds);
         tvBest.setText(time);
-
     }
-
-
 }
 
 
