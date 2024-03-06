@@ -1,12 +1,60 @@
 # Aplicación de Juegos
 ## Introducción
-Este documento reresenta el proyecto final de la asignatura Interficies Móviles del Grado Superior DAM, en la que se ha desarrollado una aplicación utilizando Android Studio y Java. 
-El proyecto incluye dos juegos: 2048 y Senku, almacena las puntuaciones obtenidas en una base de datos SQLite y contiene un apartado de configuraciones.
-Las imágenes se han obtenido desde la página web flaticon.com y los sonidos extras desde pizabay.com de manera libre y gratuita.
+Este documento representa el proyecto final de la asignatura Interficies Móviles del Grado Superior DAM, en la que se ha desarrollado una aplicación utilizando Android Studio y Java. 
+Se incluyen dos juegos: 2048 y Senku, y además, se almacenan las puntuaciones obtenidas en una base de datos SQLite y se tiene acceso a un apartado específico de configuraciones.
+Las imágenes de la aplicaión se han obtenido desde la página web flaticon.com y los sonidos extras desde pizabay.com de manera libre y gratuita.
 La dinámica del 2048 consiste en desplazar bloques numéricos en un tablero de dimensiones 4x4, combinándolos para formar bloques de mayor valor y tratando de llegar a la casilla 2048.
 Asimismo, en el Senku el objetivo es eliminar piezas del tablero saltando sobre ellas con otra pieza adyacente. Se han de eliminar todas las piezas, dejando solo una en el centro del tablero para poder ganar.
 
 La aplicación cuenta con un sistema de puntuación para cada juego. En el Senku, se guarda el tiempo que se ha necesitado para completarlo. Y en el 2048 se guarda la puntuación máxima que se ha obtenido, pudiendo ganar solo si se obtiene la casilla con el número 2048, tal como su nombre indica.
+
+## Funcionamiento general de la aplicación
+### Se adjuntan las fotos correspondientes para poder sumergirse en la app paso por paso.
+
+
+
+![splashactivity](https://github.com/yaracsoto88/appGames/assets/114931679/7be3e66e-fd5e-47cc-8d51-d029af1eaa73)
+
+![user](https://github.com/yaracsoto88/appGames/assets/114931679/79bb8b1b-c920-4498-a003-89381a128a79)
+
+![signin](https://github.com/yaracsoto88/appGames/assets/114931679/28ecdcc5-68f9-4dd0-995c-210bf0abdd3f)
+
+![login](https://github.com/yaracsoto88/appGames/assets/114931679/dc0aac30-66ec-4b6b-b94a-0b1902906c8e)
+
+![menu](https://github.com/yaracsoto88/appGames/assets/114931679/a8dd0984-8746-41d8-902e-2a587241c024)
+
+![2048_v1](https://github.com/yaracsoto88/appGames/assets/114931679/478cc6c1-dc83-4de3-9a05-aea933f2964e)
+
+![2048_v2](https://github.com/yaracsoto88/appGames/assets/114931679/0759ff9d-edfe-433d-a107-f40684bc74d0)
+
+
+![senku_v1](https://github.com/yaracsoto88/appGames/assets/114931679/aed7a275-f460-4654-8f1e-d2a74b9e2801)
+
+![senku_v2](https://github.com/yaracsoto88/appGames/assets/114931679/410cff7b-f62c-4546-ba33-6ebeeb068eb4)
+
+
+![score](https://github.com/yaracsoto88/appGames/assets/114931679/6e55ee03-6ba4-41ee-b4a4-b9875d628e7b)
+
+![scoresordenado](https://github.com/yaracsoto88/appGames/assets/114931679/51ee02dd-ff26-4a73-867f-59c30ebc18aa)
+
+
+![config](https://github.com/yaracsoto88/appGames/assets/114931679/ad453a55-4b9f-422d-9d3f-11ecdff28a9a)
+
+![passw_update](https://github.com/yaracsoto88/appGames/assets/114931679/487e54d3-9f59-465a-85c5-5d38a2939ebb)
+
+
+![profile_update](https://github.com/yaracsoto88/appGames/assets/114931679/8e966375-8bf6-4ff6-a1e8-dfad20fd07ab)
+
+![mnu_v2](https://github.com/yaracsoto88/appGames/assets/114931679/9371fed4-32c6-4c7a-bc9f-c3f7d54366f3)
+
+
+![closesession](https://github.com/yaracsoto88/appGames/assets/114931679/10fbaa90-9af2-4e67-96f7-356290c0093d)
+
+
+
+
+
+
 
 ## Clases generales y su propósito
 ### Menu
@@ -40,7 +88,7 @@ Esta clase proporciona una estructura de datos para representar las puntuaciones
 ### Setting
 Esta clase se encarga proporcionar funcionalidades relacionadas con la configuración del perfil. Utiliza la clase DBHelper para interactuar con la base de datos local gestionando la carga y almacenamiento de la foto de perfil del usuario, así como la actualización de la contraseña en la base de datos. Además, puede redirigir al usuario a la actividad de inicio de sesión al cerrar la sesión y de esta manera, registrarse con una nueva cuenta.
 
-## Las clase de los Juegos
+## Las clases de los Juegos
 ### Senku
 Utiliza un GridLayout para representar visualmente el tablero y ofrece funcionalidades como temporizador, controles táctiles, botones para deshacer movimientos y reiniciar el juego. La clase interactúa con la persistencia de datos a través de DBHelper para almacenar y recuperar las mejores puntuaciones de los usuarios. Además, incorpora efectos de sonido y mensajes visuales para notificar eventos clave del juego, como el fin del juego o la victoria.
 
