@@ -1,6 +1,6 @@
 # Aplicación de Juegos
 ## Introducción
-Este documento presenta la documentación para el proyecto final de la asignatura Interficies Móviles del Grado Superior DAM, en la que se ha desarrollado una aplicación utilizando Android Studio y Java. 
+Este documento reresenta el proyecto final de la asignatura Interficies Móviles del Grado Superior DAM, en la que se ha desarrollado una aplicación utilizando Android Studio y Java. 
 El proyecto incluye dos juegos: 2048 y Senku, almacena las puntuaciones obtenidas en una base de datos SQLite y contiene un apartado de configuraciones.
 Las imágenes se han obtenido desde la página web flaticon.com y los sonidos extras desde pizabay.com de manera libre y gratuita.
 La dinámica del 2048 consiste en desplazar bloques numéricos en un tablero de dimensiones 4x4, combinándolos para formar bloques de mayor valor y tratando de llegar a la casilla 2048.
