@@ -58,25 +58,28 @@ Se compone de dos recyclerviews, cada uno para cada juego, y de tres botones. Do
 ![score](https://github.com/yaracsoto88/appGames/assets/114931679/6e55ee03-6ba4-41ee-b4a4-b9875d628e7b)
 
 Si hacemos clic en ordenar scores, podemos observar que en el 2048 se ordenan de mayor a menor, la máxima puntuación obtenida. En cambio, en el Senku, se ordena de menor a mayor, ya que si se completa el juego en menos tiempo lo ha hecho mejor.
+
 ![scoresordenado](https://github.com/yaracsoto88/appGames/assets/114931679/51ee02dd-ff26-4a73-867f-59c30ebc18aa)
 
+La última panatalla a la que se puede acceder en esta aplicación es la de configuración. 
 
 ![config](https://github.com/yaracsoto88/appGames/assets/114931679/ad453a55-4b9f-422d-9d3f-11ecdff28a9a)
 
+En primer lugar, se permite configurar la contraseña del usuario y cambiarla a una nueva. Si esto es así, aparece un mensaje de contorl que informa que se ha modificado correctamente.
+
 ![passw_update](https://github.com/yaracsoto88/appGames/assets/114931679/487e54d3-9f59-465a-85c5-5d38a2939ebb)
 
+En segundo lugar, se puede cambiar la foto de perfil, accediendo a la galería del usuario y seleccionando una diferente. Una vez completado este proceso, aparece un mensaje informando de que todo ha ido bien y se guarda la foto en una Image View del aparatado de configuraciones, además de cambiarse en el menú principal.
 
 ![profile_update](https://github.com/yaracsoto88/appGames/assets/114931679/8e966375-8bf6-4ff6-a1e8-dfad20fd07ab)
 
+Comprobamos que se ha modificado la foto.
+
 ![mnu_v2](https://github.com/yaracsoto88/appGames/assets/114931679/9371fed4-32c6-4c7a-bc9f-c3f7d54366f3)
 
+Por último, si le damos click al botón de cerrar sesión, nos llevará a la pantalla inicial de registro de usuario y cerrará la conexión con el actual, mostrando previamente un mensaje de si se está de acuerdo con la acción.
 
 ![closesession](https://github.com/yaracsoto88/appGames/assets/114931679/10fbaa90-9af2-4e67-96f7-356290c0093d)
-
-
-
-
-
 
 
 ## Clases generales y su propósito
