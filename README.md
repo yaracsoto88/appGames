@@ -2,7 +2,7 @@
 ## Introducción
 Este documento representa el proyecto final de la asignatura Interficies Móviles del Grado Superior DAM, en la que se ha desarrollado una aplicación utilizando Android Studio y Java. 
 Se incluyen dos juegos: 2048 y Senku, y además, se almacenan las puntuaciones obtenidas en una base de datos SQLite y se tiene acceso a un apartado específico de configuraciones.
-Las imágenes de la aplicaión se han obtenido desde la página web flaticon.com y los sonidos extras desde pizabay.com de manera libre y gratuita.
+Las imágenes de la aplicación se han obtenido desde la página web flaticon.com y los sonidos extras desde pizabay.com de manera libre y gratuita.
 La dinámica del 2048 consiste en desplazar bloques numéricos en un tablero de dimensiones 4x4, combinándolos para formar bloques de mayor valor y tratando de llegar a la casilla 2048.
 Asimismo, en el Senku el objetivo es eliminar piezas del tablero saltando sobre ellas con otra pieza adyacente. Se han de eliminar todas las piezas, dejando solo una en el centro del tablero para poder ganar.
 
@@ -12,11 +12,11 @@ La aplicación cuenta con un sistema de puntuación para cada juego. En el Senku
 ### Se adjuntan las fotos correspondientes para poder sumergirse en la app paso por paso.
 
 En primer lugar podemos visualizar una splashActivity que se ejecuta al iniciar la aplicación 
-con un sonido coreespondiente de bombilla encendida.
+con un sonido correspondiente de bombilla encendida.
 
 ![splashactivity](https://github.com/yaracsoto88/appGames/assets/114931679/7be3e66e-fd5e-47cc-8d51-d029af1eaa73)
 
-Esto nos lleva al apartado de usuario para poder acceder correctamente. Nos logueamos con las credenciales nombre de usuario: yara y contraseña: yara
+Esto nos lleva al apartado de usuario para poder acceder correctamente. Nos logueamos con las credenciales nombre de usuario: yara y contraseña: yara2
 
 ![user](https://github.com/yaracsoto88/appGames/assets/114931679/79bb8b1b-c920-4498-a003-89381a128a79)
 
@@ -28,8 +28,8 @@ Una vez completada esta tarea, le damos click al botón de LogIn y aparece un me
 
 ![login](https://github.com/yaracsoto88/appGames/assets/114931679/dc0aac30-66ec-4b6b-b94a-0b1902906c8e)
 
-Inmediatamente, accedemos al menu principal de la aplicación que está compuesto por un recyclerView que va mostrndo los cuatro elementos del mismo.
-Están los apartados de los dos juegos, el aparatado de guardar las puntuaciones y el de configuraciones. 
+Inmediatamente, accedemos al menu principal de la aplicación que está compuesto por un recyclerView que va mostrando los cuatro elementos del mismo.
+Están los apartados de los dos juegos, el apartado de guardar las puntuaciones y el de configuraciones. 
 Además, observamos que cada usuario tiene su foto de perfil y hay un mensaje que lo recibe con "Welcome: +nombreUsuario"
 
 ![menu](https://github.com/yaracsoto88/appGames/assets/114931679/a8dd0984-8746-41d8-902e-2a587241c024)
@@ -39,7 +39,7 @@ Accedemos al primer juego, el 2048, compuesto por una board de 4x4 que mientras 
 ![2048_v1](https://github.com/yaracsoto88/appGames/assets/114931679/478cc6c1-dc83-4de3-9a05-aea933f2964e)
 
 
-También se ha programado un temporizador, un botón de volver al menú, otro botón para desahcer un movimiento, un botón para resetear el juego, dos TextViews donde se guarda la puntuacion actual y la mejor puntuación que haya jugado el usuario registrado, respectivamente.
+También se ha programado un temporizador, un botón de volver al menú, otro botón para deshacer un movimiento, un botón para resetear el juego, dos TextViews donde se guarda la puntuación actual y la mejor que haya jugado el usuario registrado, respectivamente.
 
 ![2048_v2](https://github.com/yaracsoto88/appGames/assets/114931679/0759ff9d-edfe-433d-a107-f40684bc74d0)
 
@@ -53,27 +53,27 @@ Una vez jugado y hecho todos los movimiento, caben las posibilidades de perder o
 ![senku_v2](https://github.com/yaracsoto88/appGames/assets/114931679/410cff7b-f62c-4546-ba33-6ebeeb068eb4)
 
 En la siguiente pantalla se ha accedido al apartado donde se guardan las puntuaciones del usuario registrado.
-Se compone de dos recyclerviews, cada uno para cada juego, y de tres botones. Dos para ordenar las puntuaciones y otro para boorrar todos los datos de la misma.
+Se compone de dos Recyclerviews, cada uno para cada juego, y de tres botones. Dos para ordenar las puntuaciones y otro para borrar todos los datos de la misma.
 
 ![score](https://github.com/yaracsoto88/appGames/assets/114931679/6e55ee03-6ba4-41ee-b4a4-b9875d628e7b)
 
-Si hacemos clic en ordenar scores, podemos observar que en el 2048 se ordenan de mayor a menor, la máxima puntuación obtenida. En cambio, en el Senku, se ordena de menor a mayor, ya que si se completa el juego en menos tiempo lo ha hecho mejor.
+Si hacemos clic en ordenar scores, podemos observar que en el 2048 se ordenan de mayor a menor, la máxima puntuación obtenida. En cambio, en el Senku, se ordena de menor a mayor, ya que si se completa el juego en menos tiempo quiere decir que lo ha hecho mejor.
 
 ![scoresordenado](https://github.com/yaracsoto88/appGames/assets/114931679/51ee02dd-ff26-4a73-867f-59c30ebc18aa)
 
-La última panatalla a la que se puede acceder en esta aplicación es la de configuración. 
+La última pantalla a la que se puede acceder en esta aplicación es la de configuración. 
 
 ![config](https://github.com/yaracsoto88/appGames/assets/114931679/ad453a55-4b9f-422d-9d3f-11ecdff28a9a)
 
-En primer lugar, se permite configurar la contraseña del usuario y cambiarla a una nueva. Si esto es así, aparece un mensaje de contorl que informa que se ha modificado correctamente.
+En primer lugar, se permite configurar la contraseña del usuario y cambiarla a una nueva. Si esto es así, aparece un mensaje de control que informa que se ha modificado correctamente.
 
 ![passw_update](https://github.com/yaracsoto88/appGames/assets/114931679/487e54d3-9f59-465a-85c5-5d38a2939ebb)
 
-En segundo lugar, se puede cambiar la foto de perfil, accediendo a la galería del usuario y seleccionando una diferente. Una vez completado este proceso, aparece un mensaje informando de que todo ha ido bien y se guarda la foto en una Image View del aparatado de configuraciones, además de cambiarse en el menú principal.
+En segundo lugar, se puede cambiar la foto de perfil, accediendo a la galería del usuario y seleccionando una diferente. Una vez completado este proceso, aparece un mensaje informando de que todo ha ido bien y se guarda la foto en una ImageView del apartado de configuraciones, además de cambiarse en el menú principal.
 
 ![profile_update](https://github.com/yaracsoto88/appGames/assets/114931679/8e966375-8bf6-4ff6-a1e8-dfad20fd07ab)
 
-Comprobamos que se ha modificado la foto.
+Comprobamos que se ha modificado la foto con éxito.
 
 ![mnu_v2](https://github.com/yaracsoto88/appGames/assets/114931679/9371fed4-32c6-4c7a-bc9f-c3f7d54366f3)
 
