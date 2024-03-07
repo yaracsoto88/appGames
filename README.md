@@ -11,30 +11,53 @@ La aplicación cuenta con un sistema de puntuación para cada juego. En el Senku
 ## Funcionamiento general de la aplicación
 ### Se adjuntan las fotos correspondientes para poder sumergirse en la app paso por paso.
 
-
+En primer lugar podemos visualizar una splashActivity que se ejecuta al iniciar la aplicación 
+con un sonido coreespondiente de bombilla encendida.
 
 ![splashactivity](https://github.com/yaracsoto88/appGames/assets/114931679/7be3e66e-fd5e-47cc-8d51-d029af1eaa73)
 
+Esto nos lleva al apartado de usuario para poder acceder correctamente. Nos logueamos con las credenciales nombre de usuario: yara y contraseña: yara
+
 ![user](https://github.com/yaracsoto88/appGames/assets/114931679/79bb8b1b-c920-4498-a003-89381a128a79)
+
+Al darle click al botón de LogIn podemos observar que el usuario todavía no existe y nos pide que primero nos registremos. Por lo tanto, hay que clicar el botón de SignIn para crearnos el usuario y que se guarde en la base de datos.
 
 ![signin](https://github.com/yaracsoto88/appGames/assets/114931679/28ecdcc5-68f9-4dd0-995c-210bf0abdd3f)
 
+Una vez completada esta tarea, le damos click al botón de LogIn y aparece un mensaje de registro completado satisfactoriamente.
+
 ![login](https://github.com/yaracsoto88/appGames/assets/114931679/dc0aac30-66ec-4b6b-b94a-0b1902906c8e)
+
+Inmediatamente, accedemos al menu principal de la aplicación que está compuesto por un recyclerView que va mostrndo los cuatro elementos del mismo.
+Están los apartados de los dos juegos, el aparatado de guardar las puntuaciones y el de configuraciones. 
+Además, observamos que cada usuario tiene su foto de perfil y hay un mensaje que lo recibe con "Welcome: +nombreUsuario"
 
 ![menu](https://github.com/yaracsoto88/appGames/assets/114931679/a8dd0984-8746-41d8-902e-2a587241c024)
 
+Accedemos al primer juego, el 2048, compuesto por una board de 4x4 que mientras se hacen movimientos va generando casillas, primero el número 2 aleatoriamente, y luego a medida que vamos jugando va juntando y sumando sus potencias. 
+
 ![2048_v1](https://github.com/yaracsoto88/appGames/assets/114931679/478cc6c1-dc83-4de3-9a05-aea933f2964e)
+
+
+También se ha programado un temporizador, un botón de volver al menú, otro botón para desahcer un movimiento, un botón para resetear el juego, dos TextViews donde se guarda la puntuacion actual y la mejor puntuación que haya jugado el usuario registrado, respectivamente.
 
 ![2048_v2](https://github.com/yaracsoto88/appGames/assets/114931679/0759ff9d-edfe-433d-a107-f40684bc74d0)
 
+Si accedemos al siguiente juego, el Senku, podemos observar que, al igual que en el 2048, está el botón de volver al menú, el botón de deshacer movimiento, el de empezar desde el principio el rompecabezas, y el TextView con la respectiva mejor puntuación. Además, se ha añadido alguna ImageView para mejorar la estética.
+He innovado y la casilla central, en vez de ser blanca, es una pequeña flor azul.
 
 ![senku_v1](https://github.com/yaracsoto88/appGames/assets/114931679/aed7a275-f460-4654-8f1e-d2a74b9e2801)
 
+Una vez jugado y hecho todos los movimiento, caben las posibilidades de perder o ganar. En este caso, se ha perdido y aparece un Toast informando con un sonido de gameOver.
+
 ![senku_v2](https://github.com/yaracsoto88/appGames/assets/114931679/410cff7b-f62c-4546-ba33-6ebeeb068eb4)
 
+En la siguiente pantalla se ha accedido al apartado donde se guardan las puntuaciones del usuario registrado.
+Se compone de dos recyclerviews, cada uno para cada juego, y de tres botones. Dos para ordenar las puntuaciones y otro para boorrar todos los datos de la misma.
 
 ![score](https://github.com/yaracsoto88/appGames/assets/114931679/6e55ee03-6ba4-41ee-b4a4-b9875d628e7b)
 
+Si hacemos clic en ordenar scores, podemos observar que en el 2048 se ordenan de mayor a menor, la máxima puntuación obtenida. En cambio, en el Senku, se ordena de menor a mayor, ya que si se completa el juego en menos tiempo lo ha hecho mejor.
 ![scoresordenado](https://github.com/yaracsoto88/appGames/assets/114931679/51ee02dd-ff26-4a73-867f-59c30ebc18aa)
 
 
