@@ -86,37 +86,74 @@ Por último, si le damos click al botón de cerrar sesión, nos llevará a la pa
 ### Menu
 Esta actividad representa el menú principal. Utiliza un RecyclerView para mostrar elementos del menú, accede a preferencias compartidas para obtener el nombre de usuario, y realiza animaciones al iniciar la actividad. Además, carga la imagen del usuario desde una base de datos local y la muestra en un ImageView.
 
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/10cea4b2-dfc7-4b34-941a-c8e75a0701e7)
+
 ### MenuAdapter
 Esta clase un adaptador del RecyclerView diseñado para la clase Menu. Su propósito principal es gestionar la visualización de elementos del menú mediante la carga de datos desde un ArrayList de objetos MenuItem. Además, al hacer clic en un elemento, se inicia una nueva actividad correspondiente al elemento seleccionado.
 
-### MenItem
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/acfb8bb2-9ac2-483a-92a1-dd2252c9ae2d)
+
+### MenuItem
 Esta clase define objetos que representan elementos del menú. Cada objeto tiene un título, un recurso de imagen y la clase de actividad asociada. La función getMenu() devuelve un ArrayList de objetos MenuItem predefinidos para los elementos del menú, como "2048", "Senku", "Score" y "Settings", con sus respectivos recursos de imagen y clases de actividad asociadas.
 
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/251c0961-0d55-4129-858b-54041eed6c37)
+
+
 ### SplashActivity
-SplashActivity es la actividad de bienvenida que muestra una animación al inicio de la aplicación. Durante la animación, se reproduce un sonido, y al finalizar, se inicia la actividad User y se finaliza la actividad actual. Además, se asegura de liberar los recursos del reproductor de medios en el método "onDestroy" para evitar posibles fugas de memoria.
+SplashActivity es la actividad de bienvenida que muestra una animación al inicio de la aplicación. Durante la animación, se reproduce un sonido, y al finalizar, se inicia la actividad User y se finaliza la actividad actual. Además, se asegura de liberar los recursos del reproductor de medios en el método onDestroy para evitar posibles fugas de memoria.
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/5e5bbbf3-4210-4733-b7c7-76259ab81aba)
+
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/2665dddb-5aba-45af-a819-35f56119b77a)
+
 
 ### User
-Esta actividad representa el inicio de sesión y registro de los usuarios. Permite ingresar unos determinados credenciales o bien registrarse. Al hacer clic en los botones de inicio de sesión o registro, verifica los datos en la base de datos local, DBHelper, y muestra mensajes de alerta correspondientes. Si las credenciales son correctas durante el inicio de sesión, se almacena el usuario activo en las preferencias compartidas y se inicia la actividad Menu. La función message se utiliza para mostrar mensajes de alerta.
+Esta actividad representa el inicio de sesión y registro de los usuarios. Permite ingresar unos determinados credenciales o bien registrarse. Al hacer clic en los botones de inicio de sesión o registro, verifica los datos en la base de datos local, DBHelper, y muestra mensajes de alerta correspondientes. Si las credenciales son correctas durante el inicio de sesión, se almacena el usuario activo en las preferencias compartidas y se inicia la actividad Menu. 
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/52748fd5-145a-4f44-9b91-29a43fd06f9e)
+
 
 ### DBHelper
 Esta clase gestiona la creación, actualización y operaciones de inserción/consulta para las tablas relacionadas con puntuaciones de juegos y datos de usuario. 
 Las tablas que se crean son "ScoreData2048", "ScoreDataSenku" y "UserData". Gracias a esta clase se puede insertar de datos de puntuación, datos de usuario, actualizar fotos de usuario, verificar credenciales de usuario, consultar datos de las puntuaciones, eliminar puntuaciones y actualizar contraseñas. Además, incluye métodos específicos para obtener la mejor puntuación en cada juego.
 
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/a1aff3b8-97a7-4cc9-a506-f7c02e9e0f39)
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/8a931e44-525d-444d-9056-f5f478fe95a1)
+
+
 ### ScoreActivity
 Esta actividad muestra las puntuaciones. Permite ordenarlas y visualizarlas, borrarlas y volver al menú principal. Utiliza RecyclerViews y adaptadores ScoresAdapter para mostrar las puntuaciones. Además, incluye funcionalidades como el deslizamiento para eliminar puntuaciones y la actualización dinámica de las listas al ordenarlas. La clase utiliza un DBHelper para gestionar las operaciones de base de datos y obtener los datos de puntuación.
 
-### ScoreAdapter
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/62365633-bde5-4adf-8712-d32d19a709b4)
+
+
+### ScoresAdapter
 Esta clase es un adaptador de RecyclerView diseñado para mostrar las puntuaciones en ScoreActivity. Utiliza un diseño personalizado ("list_layout.xml") para cada elemento de la lista, mostrando el nombre del jugador y la puntuación. La clase gestiona la creación de vistas y la vinculación de datos para cada elemento, permitiendo así la visualización de las puntuaciones en un RecyclerView.
 
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/5b899c28-3bd5-43f1-80a4-2499f2a6279d)
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/f1678495-9c61-4554-8b7d-d980e87df2fc)
+
 ### Score
-Esta clase proporciona una estructura de datos para representar las puntuaciones de los juegos, y se utiliza en ScoreActivity y en ScoresAdapter para mostrar y gestionar las puntuaciones en la interfaz de usuario, así como en la clase DBHelper para interactuar con la base de datos. Incluye un método formatScore que convierte la puntuación de segundos a un formato más legible en minutos y segundos (MM:SS). 
+Esta clase proporciona una estructura de datos para representar las puntuaciones de los juegos, y se utiliza en ScoreActivity y en ScoresAdapter para mostrar y gestionar las puntuaciones en la interfaz de usuario, así como en la clase DBHelper para interactuar con la base de datos. Incluye un método formatScore que convierte la puntuación de segundos a un formato más legible en minutos y segundos.
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/138fbcdf-eff0-4e34-8e52-2d2081a55aad)
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/5661f475-ef2f-4100-bc1d-b26db63716bd)
 
 ### Setting
 Esta clase se encarga proporcionar funcionalidades relacionadas con la configuración del perfil. Utiliza la clase DBHelper para interactuar con la base de datos local gestionando la carga y almacenamiento de la foto de perfil del usuario, así como la actualización de la contraseña en la base de datos. Además, puede redirigir al usuario a la actividad de inicio de sesión al cerrar la sesión y de esta manera, registrarse con una nueva cuenta.
+Utiliza el ActivityResultContracts para lanzar la galería de imágenes, y cuando se selecciona una imagen y se devuelve el resultado, verifica si la operación fue exitosa. Si es así, obtiene la Uri de la imagen seleccionada, comprueba su tamaño, guarda la imagen en la base de datos con un nombre de usuario específico, y luego carga la imagen actualizada, mostrando un mensaje de éxito. En caso de que la imagen sea demasiado grande, muestra un mensaje de error.
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/168111c9-813f-45e5-b3ba-6d8a4566de3e)
 
 ## Las clases de los Juegos
 ### Senku
 Utiliza un GridLayout para representar visualmente el tablero y ofrece funcionalidades como temporizador, controles táctiles, botones para deshacer movimientos y reiniciar el juego. La clase interactúa con la persistencia de datos a través de DBHelper para almacenar y recuperar las mejores puntuaciones de los usuarios. Además, incorpora efectos de sonido y mensajes visuales para notificar eventos clave del juego, como el fin del juego o la victoria.
+
+
 
 ### SenkuTable
 Representa la lógica y estado del tablero. Lo inicializa con fichas y casillas vacías, y permite validar y realizar movimientos según las reglas. Además, ofrece funciones para deshacer movimientos, verificar la existencia de movimientos posibles y determinar el estado del juego (victoria, derrota o en progreso). La clase interactúa con la clase Senku a través de llamadas de métodos para coordinar la lógica y mantener la coherencia entre el modelo y la vista.
