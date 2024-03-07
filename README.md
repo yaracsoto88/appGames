@@ -151,25 +151,60 @@ Utiliza el ActivityResultContracts para lanzar la galería de imágenes, y cuand
 
 ## Las clases de los Juegos
 ### Senku
-Utiliza un GridLayout para representar visualmente el tablero y ofrece funcionalidades como temporizador, controles táctiles, botones para deshacer movimientos y reiniciar el juego. La clase interactúa con la persistencia de datos a través de DBHelper para almacenar y recuperar las mejores puntuaciones de los usuarios. Además, incorpora efectos de sonido y mensajes visuales para notificar eventos clave del juego, como el fin del juego o la victoria.
+Utiliza un GridLayout para representar visualmente el tablero y ofrece funcionalidades como temporizador, controles táctiles, botones para deshacer movimientos y reiniciar el juego. A través de DBHelper se almacenan y recuperan las mejores puntuaciones de los usuarios. Además, incorpora efectos de sonido y mensajes visuales para notificar eventos clave del juego, como el fin del juego o la victoria.
 
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/9071834b-4d60-47aa-8618-ae8b936617fd)
 
 
 ### SenkuTable
 Representa la lógica y estado del tablero. Lo inicializa con fichas y casillas vacías, y permite validar y realizar movimientos según las reglas. Además, ofrece funciones para deshacer movimientos, verificar la existencia de movimientos posibles y determinar el estado del juego (victoria, derrota o en progreso). La clase interactúa con la clase Senku a través de llamadas de métodos para coordinar la lógica y mantener la coherencia entre el modelo y la vista.
 
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/1fd7143f-5683-426a-a156-b52b4199ed87)
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/eb2d5b45-16d4-426a-9dbd-0ce0ec2ae064)
+
 ### game2048
 Utiliza un objeto de la clase Tablero para gestionar el estado del mismo y la interacción con la interfaz de usuario. La clase controla la detección de gestos táctiles para realizar movimientos y muestra información como el tiempo transcurrido, puntuación actual y mejor puntuación obtenida. 
 Además, gestiona eventos como iniciar un nuevo juego, deshacer movimientos, salir del juego y actualiza el temporizador. 
-Incluye la reproducción de efectos de sonido al ganar o perder el juego. La persistencia de datos se realiza a través de la clase DBHelper, almacenando y recuperando la mejor puntuación del usuario.
+Incluye la reproducción de efectos de sonido al ganar o perder el juego.
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/b841ef19-f106-428e-8c59-d2c174803a0d)
+
 
 ### Tablero
 Esta clase gestiona la matriz de casillas, realiza movimientos y fusiones de casillas, y actualiza la interfaz de usuario. Además, controla el estado del juego, como la puntuación, si el juego se ha ganado o perdido, y proporciona métodos para deshacer movimientos.
-La inicialización del tablero se realiza mediante el método initBoar", que crea una matriz de casillas y coloca una casilla con valor 2 en una posición aleatoria. El método "conectMatrixView" actualiza la interfaz de usuario reflejando el estado actual del tablero.
-Los métodos de movimiento, como "up", "down", "left" y "right", desplazan y fusionan las casillas según la dirección especificada. El método "repaint" agrega una nueva casilla al tablero y actualiza la interfaz de usuario después de cada movimiento.
+La inicialización del tablero se realiza mediante el método initBoard, que crea una matriz de casillas y coloca una casilla con valor 2 en una posición aleatoria.
 
-La clase también incluye métodos para deshacer movimientos ("undo"), determinar si el juego se ha perdido ("gameLost") o ganado ("gameWon"), y obtener la puntuación actual del juego ("getScore").
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/47145b49-3440-4864-a085-119b65c0b127)
+
+El método conectMatrixView actualiza la interfaz de usuario reflejando el estado actual del tablero.
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/e4effa44-3e55-4f01-9056-b194378e4609)
+
+Los métodos de movimiento, como "up", "down", "left" y "right", desplazan y fusionan las casillas según la dirección especificada. 
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/dd207d25-00dc-406a-84fc-f6b745bcf398)
+
+
+El método repaint agrega una nueva casilla al tablero y actualiza la interfaz de usuario después de cada movimiento.
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/2babd004-9296-4c1e-bb5b-6415c8da400f)
+
+
+La clase también incluye métodos para deshacer movimientos undo, determinar si el juego se ha perdido gameLost, o ganado gameWon.
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/3524634e-dfb5-4659-9394-5d3fc2e8f3b9)
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/7b3f052d-e2f8-4a29-ac98-8fddc4702d7b)
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/e282a355-1954-4f84-b8a4-236fbbcde3bd)
 
 ### Casilla
-Cada instancia de esta clase representa una casilla en el tablero del juego, y su valor puede ser 0 o algún valor potencia de 2 (2, 4, 8, 16, etc.).
+Cada instancia de esta clase representa una casilla en el tablero del juego, y su valor puede ser 0 o algún valor potencia de 2 (2, 4, 8, 16, etc...)
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/7e05a23d-515e-4e7c-8257-947002bc3d53)
+
+![image](https://github.com/yaracsoto88/appGames/assets/114931679/4dec037a-2219-4a2d-a5a1-393aa9177a08)
+
+
 
